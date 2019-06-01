@@ -23,7 +23,7 @@
         <dependency>
 	    <groupId>com.github.vinixnan</groupId>
 	    <artifactId>jmetalExtraProblems</artifactId>
-	    <version>1F</version>
+	    <version>master-SNAPSHOT</version>
 	</dependency>
         <dependency>
             <groupId>junit</groupId>

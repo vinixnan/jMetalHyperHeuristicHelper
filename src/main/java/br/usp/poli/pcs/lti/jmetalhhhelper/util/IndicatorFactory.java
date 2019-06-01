@@ -19,6 +19,7 @@ import br.usp.poli.pcs.lti.jmetalhhhelper.util.metrics.SpacingCalculator;
 import br.usp.poli.pcs.lti.jmetalhhhelper.util.metrics.WFGHypervolumeCalculator;
 import br.usp.poli.pcs.lti.jmetalhhhelper.util.metrics.extrametrics.DummyAE;
 import br.usp.poli.pcs.lti.jmetalhhhelper.util.metrics.extrametrics.RandomMetric;
+import br.usp.poli.pcs.lti.jmetalproblems.interfaces.RealWorldProblem;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -27,7 +28,7 @@ import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.util.front.Front;
 
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
-import uk.ac.nottingham.asap.interfaces.RealWorldProblem;
+
 
 /**
  * The type Indicator factory.

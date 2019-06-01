@@ -1,9 +1,10 @@
 package br.usp.poli.pcs.lti.jmetalhhhelper.main;
 
 import br.usp.poli.pcs.lti.jmetalhhhelper.util.metrics.WFGHypervolumeCalculator;
-import br.usp.poli.pcs.lti.jmetalhhhelper.util.ProblemFactory;
+
 import br.usp.poli.pcs.lti.jmetalhhhelper.util.metrics.Calculator;
 import br.usp.poli.pcs.lti.jmetalhhhelper.util.metrics.IgdCalculator;
+import br.usp.poli.pcs.lti.jmetalproblems.util.ProblemFactory;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.DecimalFormat;

@@ -20,6 +20,7 @@ import static org.junit.Assert.assertEquals;
 
 import br.usp.poli.pcs.lti.jmetalhhhelper.util.metrics.Calculator;
 import br.usp.poli.pcs.lti.jmetalhhhelper.util.metrics.RCalculator;
+import br.usp.poli.pcs.lti.jmetalproblems.util.ProblemFactory;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

@@ -16,10 +16,11 @@
 
 package br.usp.poli.pcs.lti.jmetalhhhelper.core;
 
+import br.usp.poli.pcs.lti.jmetalproblems.util.ProblemFactory;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
-import br.usp.poli.pcs.lti.jmetalhhhelper.util.ProblemFactory;
+
 
 import java.util.Arrays;
 

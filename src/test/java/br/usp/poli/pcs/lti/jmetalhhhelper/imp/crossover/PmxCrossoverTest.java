@@ -1,10 +1,11 @@
 package br.usp.poli.pcs.lti.jmetalhhhelper.imp.crossover;
 
+import br.usp.poli.pcs.lti.jmetalproblems.util.ProblemFactory;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
-import br.usp.poli.pcs.lti.jmetalhhhelper.util.ProblemFactory;
+
 
 import java.util.ArrayList;
 import java.util.List;
