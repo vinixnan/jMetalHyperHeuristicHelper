@@ -101,7 +101,6 @@ public class Gde3<S extends Solution<?>> extends GDE3 implements LLHInterface<S>
     @Override
     public void initMetaheuristic(List pop) {
         population = pop;
-        population = evaluatePopulation(population);
         initProgress();
     }
 
