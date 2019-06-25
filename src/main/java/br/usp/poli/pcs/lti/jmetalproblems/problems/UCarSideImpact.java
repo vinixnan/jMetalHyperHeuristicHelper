@@ -15,7 +15,7 @@ public class UCarSideImpact extends AbstractDoubleProblem implements RealWorldPr
     public static final Double[] LOWERLIMIT = {0.5, 0.45, 0.5, 0.5, 0.875, 0.4, 0.4};
     public static final Double[] UPPERLIMIT = {1.5, 1.35, 1.5, 1.5, 2.625, 1.2, 1.2};
     private static final long serialVersionUID = 9144975964094433368L;
-
+    protected int qtdEvaluated;
     /**
      * Constructor
      */
@@ -30,7 +30,7 @@ public class UCarSideImpact extends AbstractDoubleProblem implements RealWorldPr
 
         setLowerLimit(lowerLimit);
         setUpperLimit(upperLimit);
-
+        qtdEvaluated=0;
     }
 
     /**
@@ -38,6 +38,7 @@ public class UCarSideImpact extends AbstractDoubleProblem implements RealWorldPr
      */
     @Override
     public void evaluate(DoubleSolution solution) {
+        qtdEvaluated++;
         double[] fx = new double[solution.getNumberOfObjectives()];
         double[] x = new double[solution.getNumberOfVariables()];
         for (int i = 0; i < solution.getNumberOfVariables(); i++) {
@@ -92,5 +93,10 @@ public class UCarSideImpact extends AbstractDoubleProblem implements RealWorldPr
     @Override
     public boolean isDiscrete() {
         return false;
+    }
+    
+    @Override
+    public int getQtdEvaluated() {
+        return qtdEvaluated;
     }
 }

@@ -40,7 +40,7 @@ import org.uma.jmetal.util.solutionattribute.impl.OverallConstraintViolation;
  * @author vinicius
  */
 public class Gaa extends AbstractDoubleProblem implements ConstrainedProblem<DoubleSolution>, RealWorldProblem {
-
+    protected int qtdEvaluated=0;
     // The number of decision variables
     protected final int GAA_Number_variables = 27;
 
@@ -94,6 +94,7 @@ public class Gaa extends AbstractDoubleProblem implements ConstrainedProblem<Dou
 
     @Override
     public void evaluate(DoubleSolution solution) {
+        qtdEvaluated++;
         double[] variables = new double[getNumberOfVariables()];
         double[] obj = new double[getNumberOfObjectives()];
         double[] constraint = new double[getNumberOfConstraints()];
@@ -1179,5 +1180,10 @@ public class Gaa extends AbstractDoubleProblem implements ConstrainedProblem<Dou
     @Override
     public boolean isDiscrete() {
         return false;
+    }
+    
+    @Override
+    public int getQtdEvaluated() {
+        return qtdEvaluated;
     }
 }

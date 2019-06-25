@@ -20,7 +20,7 @@ public class CarCabDesign extends AbstractDoubleProblem implements RealWorldProb
     public static final Double[] LOWERLIMIT = {18.9, 1.0, 73.53, -567.0, 58.9, -1079.0, 61.18, 2153.65, 1080.0, 690.0, 237.5};
     public static final Double[] UPPERLIMIT = {23.1, 3.0, 81.27, -513.0, 65.1, -1009.0, 67.72, 2380.35, 1160.0, 722.0, 262.5};
     private static final long serialVersionUID = 2840095756768371133L;
-
+    protected int qtdEvaluated=0;
     /**
      * Constructor
      */
@@ -43,6 +43,7 @@ public class CarCabDesign extends AbstractDoubleProblem implements RealWorldProb
      */
     @Override
     public void evaluate(DoubleSolution solution) {
+        qtdEvaluated++;
         double[] fx = new double[solution.getNumberOfObjectives()];
         double[] x = new double[solution.getNumberOfVariables()];
         for (int i = 0; i < solution.getNumberOfVariables(); i++) {
@@ -72,5 +73,10 @@ public class CarCabDesign extends AbstractDoubleProblem implements RealWorldProb
     @Override
     public boolean isDiscrete() {
         return false;
+    }
+    
+    @Override
+    public int getQtdEvaluated() {
+        return qtdEvaluated;
     }
 }

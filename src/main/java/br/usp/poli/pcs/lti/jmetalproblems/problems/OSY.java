@@ -20,7 +20,7 @@ public class OSY extends AbstractDoubleProblem implements ConstrainedProblem<Dou
     private static final long serialVersionUID = -3651458805959446658L;
     public OverallConstraintViolation<DoubleSolution> overallConstraintViolationDegree;
     public NumberOfViolatedConstraints<DoubleSolution> numberOfViolatedConstraints;
-
+    protected int qtdEvaluated=0;
     /**
      * Constructor
      */
@@ -57,6 +57,7 @@ public class OSY extends AbstractDoubleProblem implements ConstrainedProblem<Dou
      * Evaluate() method
      */
     public void evaluate(DoubleSolution solution) {
+        qtdEvaluated++;
         int numberOfVariables = getNumberOfVariables();
         int numberOfObjectives = getNumberOfObjectives();
 
@@ -117,5 +118,10 @@ public class OSY extends AbstractDoubleProblem implements ConstrainedProblem<Dou
     @Override
     public boolean isDiscrete() {
         return false;
+    }
+    
+    @Override
+    public int getQtdEvaluated() {
+        return qtdEvaluated;
     }
 }

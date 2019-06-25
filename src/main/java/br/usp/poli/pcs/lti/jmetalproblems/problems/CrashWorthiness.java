@@ -10,7 +10,7 @@ import java.util.List;
 public class CrashWorthiness extends AbstractDoubleProblem implements RealWorldProblem{
 
     private static final long serialVersionUID = -6291831458123882892L;
-
+    protected int qtdEvaluated=0;
     /**
      * Constructor
      */
@@ -37,6 +37,7 @@ public class CrashWorthiness extends AbstractDoubleProblem implements RealWorldP
      */
     @Override
     public void evaluate(DoubleSolution solution) {
+        qtdEvaluated++;
         double[] var = new double[getNumberOfVariables()];
         for (int i = 0; i < getNumberOfVariables(); i++) {
             var[i] = solution.getVariableValue(i);
@@ -59,5 +60,10 @@ public class CrashWorthiness extends AbstractDoubleProblem implements RealWorldP
     @Override
     public boolean isDiscrete() {
         return false;
+    }
+    
+    @Override
+    public int getQtdEvaluated() {
+        return qtdEvaluated;
     }
 }

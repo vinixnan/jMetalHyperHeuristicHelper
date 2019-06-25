@@ -101,7 +101,7 @@ public class Nsgaii<S extends Solution<?>> extends NSGAII<S> implements
     @Override
     public void initMetaheuristic(List pop) {
         population = pop;
-        setPopulation(evaluatePopulation(getPopulation()));
+        setPopulation((getPopulation()));
         initProgress();
         iterations = 1;
     }

@@ -14,7 +14,7 @@ import org.uma.jmetal.solution.DoubleSolution;
 import br.usp.poli.pcs.lti.jmetalproblems.interfaces.RealWorldProblem;
 
 public class VC4 extends AbstractDoubleProblem  implements RealWorldProblem{
-
+    protected int qtdEvaluated;
     /*Defaultly construct a problem instance with 5 variables, 2 objectives, 0 constraints. Each variable indicates the thickness of each structure member
 	 *  around the frontal structure. Each variable is in [1,3] mm.
      */
@@ -36,10 +36,12 @@ public class VC4 extends AbstractDoubleProblem  implements RealWorldProblem{
         }
         setLowerLimit(lowerLimit);
         setUpperLimit(upperLimit);
+        qtdEvaluated=0;
     }
 
     @Override
     public void evaluate(DoubleSolution solution) {
+        qtdEvaluated++;
         double[] x = new double[getNumberOfVariables()];
         for (int i = 0; i < getNumberOfVariables(); i++) {
             x[i] = solution.getVariableValue(i);
@@ -66,5 +68,10 @@ public class VC4 extends AbstractDoubleProblem  implements RealWorldProblem{
     @Override
     public boolean isDiscrete() {
         return false;
+    }
+    
+    @Override
+    public int getQtdEvaluated() {
+        return qtdEvaluated;
     }
 }

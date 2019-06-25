@@ -19,6 +19,7 @@ public class ITO extends AbstractIntegerPermutationProblem implements RealWorldP
     protected Map<Integer, Set<String>> attributeMap;
     protected Map<Integer, Set<String>> extensionMap;
     protected Set<Integer> uniqueUnitIds;
+    protected int qtdEvaluated=0;
 
     public ITO(String methodMatrixFile) throws FileNotFoundException {
         this.methodMap = new LinkedHashMap<>();
@@ -67,6 +68,7 @@ public class ITO extends AbstractIntegerPermutationProblem implements RealWorldP
 
     @Override
     public void evaluate(PermutationSolution<Integer> solution) {
+        qtdEvaluated++;
         repairSolution(solution);
 
         int methodFitness = 0;
@@ -189,5 +191,10 @@ public class ITO extends AbstractIntegerPermutationProblem implements RealWorldP
     @Override
     public boolean isDiscrete() {
         return true;
+    }
+    
+    @Override
+    public int getQtdEvaluated() {
+        return qtdEvaluated;
     }
 }

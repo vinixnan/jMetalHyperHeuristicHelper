@@ -18,6 +18,7 @@ public class VC3 extends AbstractDoubleProblem  implements RealWorldProblem{
     /*Defaultly construct a problem instance with 5 variables, 2 objectives, 0 constraints. Each variable indicates the thickness of each structure member
 	 *  around the frontal structure. Each variable is in [1,3] mm.
      */
+    protected int qtdEvaluated;
     public VC3() throws ClassNotFoundException {
         this(5, 2);
     }
@@ -37,11 +38,12 @@ public class VC3 extends AbstractDoubleProblem  implements RealWorldProblem{
         }
         setLowerLimit(lowerLimit);
         setUpperLimit(upperLimit);
-
+        qtdEvaluated=0;
     }
 
     @Override
     public void evaluate(DoubleSolution solution) {
+        qtdEvaluated++;
         // TODO Auto-generated method stub
         double[] x = new double[getNumberOfVariables()];
         for (int i = 0; i < getNumberOfVariables(); i++) {
@@ -68,5 +70,10 @@ public class VC3 extends AbstractDoubleProblem  implements RealWorldProblem{
     @Override
     public boolean isDiscrete() {
         return false;
+    }
+    
+    @Override
+    public int getQtdEvaluated() {
+        return qtdEvaluated;
     }
 }

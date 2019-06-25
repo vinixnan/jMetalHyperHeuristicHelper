@@ -21,7 +21,7 @@ public class Machining extends AbstractDoubleProblem implements ConstrainedProbl
     // defining the lower and upper limits
     public static final Double[] LOWERLIMIT = {6.40, 0.69, 3.91};
     public static final Double[] UPPERLIMIT = {7.09, 2.89, 4.61};
-
+    protected int qtdEvaluated=0;
     /**
      * Constructor. Creates a default instance of the Machining problem.
      */
@@ -46,6 +46,7 @@ public class Machining extends AbstractDoubleProblem implements ConstrainedProbl
      */
     @Override
     public void evaluate(DoubleSolution solution) {
+        qtdEvaluated++;
         double[] fx = new double[solution.getNumberOfObjectives()];
         double[] x = new double[solution.getNumberOfVariables()];
         for (int i = 0; i < solution.getNumberOfVariables(); i++) {
@@ -108,5 +109,10 @@ public class Machining extends AbstractDoubleProblem implements ConstrainedProbl
     @Override
     public boolean isDiscrete() {
         return false;
+    }
+    
+    @Override
+    public int getQtdEvaluated() {
+        return qtdEvaluated;
     }
 }

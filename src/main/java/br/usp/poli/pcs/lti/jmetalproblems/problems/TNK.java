@@ -19,7 +19,7 @@ public class TNK extends AbstractDoubleProblem implements ConstrainedProblem<Dou
 
     public OverallConstraintViolation<DoubleSolution> overallConstraintViolationDegree;
     public NumberOfViolatedConstraints<DoubleSolution> numberOfViolatedConstraints;
-
+    protected int qtdEvaluated;
     /**
      * Constructor
      */
@@ -42,12 +42,14 @@ public class TNK extends AbstractDoubleProblem implements ConstrainedProblem<Dou
 
         overallConstraintViolationDegree = new OverallConstraintViolation<DoubleSolution>();
         numberOfViolatedConstraints = new NumberOfViolatedConstraints<DoubleSolution>();
+        qtdEvaluated=0;
     }
 
     /**
      * Evaluate() method
      */
     public void evaluate(DoubleSolution solution) {
+        qtdEvaluated++;
         int numberOfVariables = getNumberOfVariables();
         int numberOfObjectives = getNumberOfObjectives();
 
@@ -101,5 +103,10 @@ public class TNK extends AbstractDoubleProblem implements ConstrainedProblem<Dou
     @Override
     public boolean isDiscrete() {
         return false;
+    }
+    
+    @Override
+    public int getQtdEvaluated() {
+        return qtdEvaluated;
     }
 }

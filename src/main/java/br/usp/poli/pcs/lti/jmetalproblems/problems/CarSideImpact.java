@@ -20,6 +20,7 @@ public class CarSideImpact extends AbstractDoubleProblem implements ConstrainedP
     private static final long serialVersionUID = -2817990885149134634L;
     public OverallConstraintViolation<DoubleSolution> overallConstraintViolationDegree;
     public NumberOfViolatedConstraints<DoubleSolution> numberOfViolatedConstraints;
+    protected int qtdEvaluated=0;
 
     // defining the lower and upper limits
     public static final Double[] LOWERLIMIT = {0.5, 0.45, 0.5, 0.5, 0.875, 0.4, 0.4};
@@ -49,6 +50,7 @@ public class CarSideImpact extends AbstractDoubleProblem implements ConstrainedP
      */
     @Override
     public void evaluate(DoubleSolution solution) {
+        qtdEvaluated++;
         double[] fx = new double[solution.getNumberOfObjectives()];
         double[] x = new double[solution.getNumberOfVariables()];
         for (int i = 0; i < solution.getNumberOfVariables(); i++) {
@@ -114,5 +116,10 @@ public class CarSideImpact extends AbstractDoubleProblem implements ConstrainedP
     @Override
     public boolean isDiscrete() {
         return false;
+    }
+    
+    @Override
+    public int getQtdEvaluated() {
+        return qtdEvaluated;
     }
 }
