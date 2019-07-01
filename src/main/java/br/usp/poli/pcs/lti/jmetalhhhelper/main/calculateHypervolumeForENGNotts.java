@@ -31,7 +31,7 @@ public class calculateHypervolumeForENGNotts {
     public static void main(String[] args) throws FileNotFoundException {
 
         boolean normalize=true;
-        normalize=false;
+        //normalize=false;
         String ibeaPath = args[0];
         String spea2Path = args[1];
         String nsgaiiPath = args[2];
@@ -40,6 +40,7 @@ public class calculateHypervolumeForENGNotts {
         String pfKnown = args[5];
         int m = Integer.parseInt(args[6]);
         int type = Integer.parseInt(args[7]);
+        String problem = args[8];
 
         //System.out.println(Arrays.toString(args));
         //read files
@@ -57,7 +58,6 @@ public class calculateHypervolumeForENGNotts {
             
             pfFront = new ArrayFront(dir);
         } else {
-            System.err.println("Only you");
             //generate ndominated front
             List<PointSolution> pflist = FrontUtils.convertFrontToSolutionList(pfFront);
             NonDominatedSolutionListArchive nd = new NonDominatedSolutionListArchive();
@@ -70,18 +70,26 @@ public class calculateHypervolumeForENGNotts {
                     .setSeparator("\t")
                     .setFunFileOutputContext(new DefaultFileOutputContext(dir))
                     .print();
+            
         }
 
         //remove worser points
         double[] nadir = FrontUtils.getMaximumValues(pfFront);
-        System.err.println(Arrays.toString(nadir));
+        //problems="HeatExchanger DiskBrakeDesign WeldedBeamDesign HydroDynamics OpticalFilter VibratingPlatformDesign"
+        if(problem.equals("HeatExchanger") || problem.equals("DiskBrakeDesign") || problem.equals("WeldedBeamDesign") || problem.equals("HydroDynamics") || problem.equals("OpticalFilter") || problem.equals("VibratingPlatformDesign")){
+            Arrays.fill(nadir, 1.0);
+        }
+        m=nadir.length;
+        System.err.println(problem+" "+Arrays.toString(nadir));
+        
+        
         ibeaFront = calculateHypervolumeForENGNotts.removeWorseThanNadir(ibeaFront, nadir, m);
         spea2Front = calculateHypervolumeForENGNotts.removeWorseThanNadir(spea2Front, nadir, m);
         nsgaiiFront = calculateHypervolumeForENGNotts.removeWorseThanNadir(nsgaiiFront, nadir, m);
         gde3Front = calculateHypervolumeForENGNotts.removeWorseThanNadir(gde3Front, nadir, m);
         mIbeaFront = calculateHypervolumeForENGNotts.removeWorseThanNadir(mIbeaFront, nadir, m);
 
-
+        WFGHypervolumeCalculatorPure wp=new WFGHypervolumeCalculatorPure();
         Calculator fhc;
         switch (type) {
             case 0:
@@ -109,23 +117,41 @@ public class calculateHypervolumeForENGNotts {
         double nsgaiiHyp = 0;
         double gde3Hyp = 0;
         double mIbeaHyp = 0;
-
-        ibeaHyp = calculateHypervolumeForENGNotts.calc(fhc, ibeaFront);
-        spea2Hyp = calculateHypervolumeForENGNotts.calc(fhc, spea2Front);
-        nsgaiiHyp = calculateHypervolumeForENGNotts.calc(fhc, nsgaiiFront);
-        gde3Hyp = calculateHypervolumeForENGNotts.calc(fhc, gde3Front);
-        mIbeaHyp = calculateHypervolumeForENGNotts.calc(fhc, mIbeaFront);
+        
+        if(type!=6){
+            ibeaHyp = calculateHypervolumeForENGNotts.calc(fhc, ibeaFront);
+            spea2Hyp = calculateHypervolumeForENGNotts.calc(fhc, spea2Front);
+            nsgaiiHyp = calculateHypervolumeForENGNotts.calc(fhc, nsgaiiFront);
+            gde3Hyp = calculateHypervolumeForENGNotts.calc(fhc, gde3Front);
+            mIbeaHyp = calculateHypervolumeForENGNotts.calc(fhc, mIbeaFront);
+        }
+        else{
+            //System.err.println("PRINTA before");
+            ibeaHyp = calculateHypervolumeForENGNotts.calc(wp, ibeaFront, nadir);
+            spea2Hyp = calculateHypervolumeForENGNotts.calc(wp, spea2Front, nadir);
+            nsgaiiHyp = calculateHypervolumeForENGNotts.calc(wp, nsgaiiFront, nadir);
+            gde3Hyp = calculateHypervolumeForENGNotts.calc(wp, gde3Front, nadir);
+            mIbeaHyp = calculateHypervolumeForENGNotts.calc(wp, mIbeaFront, nadir);
+            //System.err.println("PRINTA after");
+        }
 
         DecimalFormat nf = new DecimalFormat("###.####################");
         String valueHH = "";
-        if (args.length >= 9 && !args[8].isEmpty()) {
-            String[] hhPaths =  Arrays.copyOfRange(args, 8, args.length);
+        if (args.length >= 10 && !args[9].isEmpty()) {
+            String[] hhPaths =  Arrays.copyOfRange(args, 9, args.length);
             //System.out.println(Arrays.toString(hhPaths));
             Front[] hhFront = new Front[hhPaths.length];
             for (int i = 0; i < hhPaths.length; i++) {
                 hhFront[i]=new ArrayFront(hhPaths[i]);
+                //System.err.println("PRINTA "+hhPaths[i]);
                 hhFront[i] = calculateHypervolumeForENGNotts.removeWorseThanNadir(hhFront[i], nadir, m);
-                double hhHyp = calculateHypervolumeForENGNotts.calc(fhc, hhFront[i]);
+                double hhHyp = 0;
+                if(type!=6){
+                    hhHyp = calculateHypervolumeForENGNotts.calc(fhc, hhFront[i]);
+                }
+                else{
+                    hhHyp = calculateHypervolumeForENGNotts.calc(wp, hhFront[i], nadir);
+                }
                 valueHH += nf.format(hhHyp)+" ";
             }
             valueHH=valueHH.trim().replace(" ", ";");
@@ -139,6 +165,14 @@ public class calculateHypervolumeForENGNotts {
             return 0D;
         }
         return fhc.execute(front);
+    }
+    
+    public static double calc(WFGHypervolumeCalculatorPure fhc, Front front, double[] references) {
+        if (front == null) {
+            return 0D;
+        }
+        fhc.setM(references.length);
+        return fhc.calculate(front, references);
     }
 
     public static ArrayFront removeWorseThanNadir(Front front, double[] nadir, int m) {
