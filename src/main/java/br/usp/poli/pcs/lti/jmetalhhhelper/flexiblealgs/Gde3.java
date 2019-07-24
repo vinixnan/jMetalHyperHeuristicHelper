@@ -118,7 +118,7 @@ public class Gde3<S extends Solution<?>> extends GDE3 implements LLHInterface<S>
     
     protected void guaranteeSize(List population, int size){
         /*This is necessary because of GDE3 impossibility for generating solutions with less than 4 parent solutions. Just used in HHs*/
-        while (population.size() < size || size < 4) {
+        while (population.size() < size || population.size() < 4) {
             population.add(population.get(JMetalRandom.getInstance().nextInt(0, population.size() - 1)));
         }
     }
