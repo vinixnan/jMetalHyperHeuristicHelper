@@ -17,65 +17,65 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.12</version>
+            <version>4.13</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.beust</groupId>
             <artifactId>jcommander</artifactId>
-            <version>1.72</version>
+            <version>1.78</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-configuration2</artifactId>
-            <version>2.3</version>
+            <version>2.7</version>
         </dependency>
         <dependency>
             <groupId>commons-beanutils</groupId>
             <artifactId>commons-beanutils</artifactId>
-            <version>1.9.3</version>
+            <version>1.9.4</version>
         </dependency>
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
-            <version>2.22.0</version>
+            <version>3.3.3</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.2</version>
+            <version>1.18.12</version>
         </dependency>
         <dependency>
             <groupId>org.uma.jmetal</groupId>
             <artifactId>jmetal-core</artifactId>
-            <version>5.7</version>
+            <version>5.9</version>
             <type>jar</type>
         </dependency>
         <dependency>
             <groupId>org.uma.jmetal</groupId>
             <artifactId>jmetal-algorithm</artifactId>
-            <version>5.7</version>
+            <version>5.9</version>
         </dependency>
         <dependency>
             <groupId>org.uma.jmetal</groupId>
             <artifactId>jmetal-problem</artifactId>
-            <version>5.7</version>
+            <version>5.9</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-            <version>3.8</version>
+            <version>3.9</version>
         </dependency>
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>26.0-jre</version>
+            <version>28.2-jre</version>
             <type>jar</type>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-csv</artifactId>
-            <version>1.5</version>
+            <version>1.8</version>
         </dependency>
     </dependencies>
     <build>
@@ -84,7 +84,7 @@
             <plugin>
                 <groupId>org.pitest</groupId>
                 <artifactId>pitest-maven</artifactId>
-                <version>1.4.2</version>
+                <version>1.5.0</version>
                 <configuration>
                     <targetClasses>
                         <param>br.usp.poli.pcs.lti.jmetalbridge*</param>
@@ -97,7 +97,7 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.2</version>
+                <version>0.8.5</version>
                 <executions>
                     <execution>
                         <goals>
@@ -116,12 +116,12 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>3.0.0</version>
+                <version>3.1.1</version>
                 <dependencies>
                     <dependency>
                         <groupId>com.puppycrawl.tools</groupId>
                         <artifactId>checkstyle</artifactId>
-                        <version>8.21</version>
+                        <version>8.30</version>
                     </dependency>
                 </dependencies>
             </plugin>
@@ -146,12 +146,12 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-report-plugin</artifactId>
-                <version>2.22.0</version>
+                <version>3.0.0-M4</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>3.0.0</version>
+                <version>3.1.1</version>
                 <configuration>
                     <!--<configLocation>google_checks.xml</configLocation>-->
                     <!--<configLocation>sun_checks.xml</configLocation>-->
@@ -169,7 +169,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-pmd-plugin</artifactId>
-                <version>3.10.0</version>
+                <version>3.13.0</version>
             </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
@@ -179,12 +179,12 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jxr-plugin</artifactId>
-                <version>2.5</version>
+                <version>3.0.0</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.0.1</version>
+                <version>3.1.1</version>
             </plugin>
         </plugins>
     </reporting>
