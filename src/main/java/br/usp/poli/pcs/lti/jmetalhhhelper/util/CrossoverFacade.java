@@ -252,4 +252,11 @@ public class CrossoverFacade extends OperatorFacade {
     cf.setParams(params);
     return cf;
   }
+
+    @Override
+    public String toString() {
+        return op.getClass().getSimpleName();
+    }
+  
+  
 }

@@ -1,5 +1,6 @@
 package br.usp.poli.pcs.lti.jmetalhhhelper.flexiblealgs;
 
+import br.usp.poli.pcs.lti.jmetalhhhelper.core.OpManager;
 import br.usp.poli.pcs.lti.jmetalhhhelper.core.interfaces.ArchivedLLHInterface;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +37,8 @@ public class Spea2<S extends Solution<?>> extends SPEA2<S> implements
     protected int archiveSize;
 
     protected int maxIterations_;//the other is final
+    
+    protected OpManager selector = new OpManager();
 
     /**
      * Instantiates a new Spea 2.
@@ -249,5 +252,10 @@ public class Spea2<S extends Solution<?>> extends SPEA2<S> implements
     @Override
     public void setMaxIterations(int maxIteration) {
         maxIterations_ = maxIteration;
+    }
+    
+    @Override
+    public OpManager getOpLLHManager() {
+        return selector;
     }
 }

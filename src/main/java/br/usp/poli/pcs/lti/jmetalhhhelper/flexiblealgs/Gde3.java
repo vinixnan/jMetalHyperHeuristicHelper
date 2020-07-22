@@ -1,5 +1,6 @@
 package br.usp.poli.pcs.lti.jmetalhhhelper.flexiblealgs;
 
+import br.usp.poli.pcs.lti.jmetalhhhelper.core.OpManager;
 import java.util.List;
 import org.uma.jmetal.algorithm.multiobjective.gde3.GDE3;
 import org.uma.jmetal.operator.CrossoverOperator;
@@ -24,6 +25,7 @@ public class Gde3<S extends Solution<?>> extends GDE3 implements LLHInterface<S>
      */
     protected int maxIterations;
     protected int iterations;
+    protected OpManager selector = new OpManager();
 
     protected List<DoubleSolution> offspringPopulation;
 
@@ -192,5 +194,10 @@ public class Gde3<S extends Solution<?>> extends GDE3 implements LLHInterface<S>
         population = replacement(population, offspringPopulation);
         iterations = 1;
         evaluations = pop.size();
+    }
+
+    @Override
+    public OpManager getOpLLHManager() {
+        return selector;
     }
 }

@@ -1,5 +1,6 @@
 package br.usp.poli.pcs.lti.jmetalhhhelper.imp.algs;
 
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 import org.uma.jmetal.operator.CrossoverOperator;
@@ -17,6 +18,15 @@ public class mIBEA<S extends Solution<?>> extends IBEA<S> {
 
     public mIBEA(Problem problem, int populationSize, int archiveSize, int maxEvaluations, SelectionOperator selectionOperator, CrossoverOperator crossoverOperator, MutationOperator mutationOperator) {
         super(problem, populationSize, archiveSize, maxEvaluations, selectionOperator, crossoverOperator, mutationOperator);
+    }
+    
+    @Override
+    protected void generateUsingOpManager(List<S> matingPopulation) {
+        SecureRandom s=new SecureRandom();
+        while(matingPopulation.size() < populationSize){
+            matingPopulation.add(matingPopulation.get(s.nextInt(matingPopulation.size())));
+        }
+        super.generateUsingOpManager(matingPopulation);
     }
     
     /**

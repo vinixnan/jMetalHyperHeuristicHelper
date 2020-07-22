@@ -73,7 +73,7 @@ public class AlgOpManagerSelectorTest {
     llh.setMutation(mf);
     OpSelector ops = Mockito.mock(OpSelector.class, Mockito.CALLS_REAL_METHODS);
     when(ops.select()).thenReturn(llh);
-    llhManager = new OpManager(ops);
+    llhManager = new OpManager();
     llhManager.setSelector(ops);
     ops.setLlhs(new ArrayList());
     ops.getLlhs().add(llh);

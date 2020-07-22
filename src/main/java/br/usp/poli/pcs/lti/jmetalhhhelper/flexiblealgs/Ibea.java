@@ -1,5 +1,6 @@
 package br.usp.poli.pcs.lti.jmetalhhhelper.flexiblealgs;
 
+import br.usp.poli.pcs.lti.jmetalhhhelper.core.OpManager;
 import br.usp.poli.pcs.lti.jmetalhhhelper.core.interfaces.ArchivedLLHInterface;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +41,8 @@ public class Ibea<S extends Solution<?>> extends IBEA<S> implements
      * Max Number of iterations.
      */
     protected int maxIterations;
+    
+    protected OpManager selector = new OpManager();
 
     /**
      * Instantiates a new Ibea.
@@ -58,6 +61,7 @@ public class Ibea<S extends Solution<?>> extends IBEA<S> implements
         super(problem, populationSize, archiveSize, maxEvaluations, selectionOperator,
                 crossoverOperator, mutationOperator);
         maxIterations = maxEvaluations / populationSize;
+        selector = new OpManager();
     }
 
     /**
@@ -273,5 +277,10 @@ public class Ibea<S extends Solution<?>> extends IBEA<S> implements
     @Override
     public void setMaxIterations(int maxIteration) {
         maxIterations = maxIteration;
+    }
+    
+    @Override
+    public OpManager getOpLLHManager() {
+        return selector;
     }
 }

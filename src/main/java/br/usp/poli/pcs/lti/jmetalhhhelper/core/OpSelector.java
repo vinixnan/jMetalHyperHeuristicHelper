@@ -45,6 +45,15 @@ public abstract class OpSelector<S extends Solution<?>> implements Serializable 
   public void setLlhs(ArrayList<LowLevelHeuristic> llhs) {
     this.llhs = llhs;
   }
+  
+  /**
+   * Set LowLevelHeuristic set.
+   *
+     * @param llh
+   */
+  public void addLlhs(LowLevelHeuristic llh) {
+    this.llhs.add(llh);
+  }
 
   /**
    * Returns whether solutions are equals.
@@ -82,14 +91,20 @@ public abstract class OpSelector<S extends Solution<?>> implements Serializable 
     }
     return appliedAlgorithm;
   }
+  
+    public String getSuiteName() {
+        String st = "";
+        for (LowLevelHeuristic act : this.llhs) {
+            st += act.toString() +" | ";
+        }
+        return st;
+    }
 
   /**
    * Print Low-Level Heuristic set.
    */
   public void printSuite() {
-    for (LowLevelHeuristic act : this.llhs) {
-      System.out.println(act.toString());
-    }
+      System.out.println(getSuiteName());
   }
 
   /**
@@ -98,4 +113,10 @@ public abstract class OpSelector<S extends Solution<?>> implements Serializable 
    * @return the selected LowLevelHeuristic
    */
   public abstract LowLevelHeuristic select();
+  
+  public abstract void init();
+  
+  public abstract void updateReward(LowLevelHeuristic op, double[] reward);
+  
+  public abstract String getSelectHistory();
 }

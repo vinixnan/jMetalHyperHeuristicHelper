@@ -268,4 +268,9 @@ public class MutationFacade extends OperatorFacade {
     mf.setParams(params);
     return mf;
   }
+  
+  @Override
+    public String toString() {
+        return op.getClass().getSimpleName();
+    }
 }

@@ -1,5 +1,6 @@
 package br.usp.poli.pcs.lti.jmetalhhhelper.flexiblealgs;
 
+import br.usp.poli.pcs.lti.jmetalhhhelper.core.OpManager;
 import java.util.Comparator;
 import java.util.List;
 
@@ -35,6 +36,8 @@ public class Nsgaii<S extends Solution<?>> extends NSGAII<S> implements
     protected int maxIterations;
 
     protected List<S> offspringPopulation;
+    
+    protected OpManager selector = new OpManager();
 
     /**
      * Instantiates a new Nsgaii.
@@ -184,5 +187,10 @@ public class Nsgaii<S extends Solution<?>> extends NSGAII<S> implements
         population = replacement(population, offspringPopulation);
         iterations = 1;
         evaluations = pop.size();
+    }
+    
+    @Override
+    public OpManager getOpLLHManager() {
+        return selector;
     }
 }
