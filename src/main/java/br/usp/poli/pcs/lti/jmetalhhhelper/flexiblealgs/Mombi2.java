@@ -25,8 +25,14 @@ public class Mombi2<S extends Solution<?>> extends MOMBI2<S> implements LLHInter
 
     @Override
     public void run() {
-        initMetaheuristic();
-        this.execute();
+        if(selector.isHHInUse()){
+            initMetaheuristic();
+            this.execute();
+        }
+        else{
+            super.run();
+        }
+            
     }
 
     @Override

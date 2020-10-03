@@ -377,9 +377,9 @@ public class AlgorithmBuilder<S extends Solution<?>> {
                 return createGde3(configAlg, configHeuristic);
             case "MoeadDra":
                 return createMoead(configAlg, configHeuristic);
-            case "MombiII":
+            case "Mombi2":
                 return createMombiII(configAlg, configHeuristic);
-            case "NsgaIII":
+            case "Nsgaiii":
                 return createNsgaIII(configAlg, configHeuristic);
             default:
                 System.err.println("Algorithm not found");

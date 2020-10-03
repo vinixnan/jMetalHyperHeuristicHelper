@@ -23,9 +23,14 @@ public class NsgaIII<S extends Solution<?>> extends NSGAIII<S> implements LLHInt
 
     @Override
     public void run() {
-        initMetaheuristic();
-        while (!isStoppingConditionReached()) {
-            generateNewPopulation();
+        if(selector.isHHInUse()){
+            initMetaheuristic();
+            while (!isStoppingConditionReached()) {
+                generateNewPopulation();
+            }
+        }
+        else{
+            super.run();
         }
     }
 

@@ -5,13 +5,12 @@ import br.usp.poli.pcs.lti.jmetalhhhelper.core.LowLevelHeuristic;
 import br.usp.poli.pcs.lti.jmetalhhhelper.core.TaggedSolution;
 import br.usp.poli.pcs.lti.jmetalhhhelper.flexiblealgs.NsgaIII;
 import br.usp.poli.pcs.lti.jmetalhhhelper.imp.crossover.DifferentialEvolution;
-import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 import org.uma.jmetal.algorithm.multiobjective.nsgaiii.NSGAIIIBuilder;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
-import org.uma.jmetal.operator.impl.crossover.DifferentialEvolutionCrossover;
+import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.impl.DefaultDoubleSolution;
 
@@ -26,6 +25,7 @@ public class NSGAIII<S extends Solution<?>> extends NsgaIII<S> {
     }
     
     protected List<S> generateUsingOpManager(List<S> population) {
+        selector.generateNadir(population);
         List<S> offspringPopulation = new ArrayList<>(this.getMaxPopulationSize());
         LowLevelHeuristic llh = selector.selectOp();
         CrossoverOperator crossoverOp = (CrossoverOperator) llh.getCrossover().getOp();
@@ -36,9 +36,8 @@ public class NSGAIII<S extends Solution<?>> extends NsgaIII<S> {
             for (int j = 0; j < numberOfParents; j++) {
                 parents.add((S) selectionOperator.execute(population));
             }
-            if (!(crossoverOp instanceof DifferentialEvolutionCrossover)) {
-                SecureRandom sr = new SecureRandom();
-                parents.remove(sr.nextInt(parents.size()));
+            if (crossoverOp instanceof DifferentialEvolution) {
+                ((DifferentialEvolution) crossoverOp).setCurrentSolution((DoubleSolution) population.get(i));
             }
             List<S> offspring = (List<S>) crossoverOp.execute(parents);
             for (S s : offspring) {
