@@ -39,9 +39,11 @@ import org.uma.jmetal.util.pseudorandom.RandomGenerator;
 import br.usp.poli.pcs.lti.jmetalhhhelper.core.interfaces.LLHInterface;
 import br.usp.poli.pcs.lti.jmetalhhhelper.imp.algs.GDE3;
 import br.usp.poli.pcs.lti.jmetalhhhelper.imp.algs.IBEA;
+import br.usp.poli.pcs.lti.jmetalhhhelper.imp.algs.MOEADDRA;
 import br.usp.poli.pcs.lti.jmetalhhhelper.imp.algs.NSGAII;
 import br.usp.poli.pcs.lti.jmetalhhhelper.imp.algs.SPEA2;
 import br.usp.poli.pcs.lti.jmetalhhhelper.imp.algs.mIBEA;
+import org.uma.jmetal.algorithm.multiobjective.moead.AbstractMOEAD;
 
 /**
  * This class builds algorithms.
@@ -315,6 +317,16 @@ public class AlgorithmBuilder<S extends Solution<?>> {
                 new SequentialSolutionListEvaluator());
         return algorithm;
     }
+    
+    protected LLHInterface createMoead(ParametersforAlgorithm configAlg, ParametersforHeuristics configHeuristic) throws JMException {
+        CrossoverOperator crossover = this.generateCross(configHeuristic);
+        MutationOperator mutation = this.generateMuta(configHeuristic, configAlg.getMaxIteractions());
+        if(!(crossover instanceof DifferentialEvolutionCrossover)){ //protect from HH methods
+            crossover=new DifferentialEvolutionCrossover();
+        }
+        LLHInterface algorithm = new MOEADDRA(problem, configAlg.getPopulationSize(), configAlg.getPopulationSize(), configAlg.getMaxEvaluations(), mutation, crossover, configAlg.getMoeadFunction(), configAlg.getWeightsPath(), configAlg.getNeighborhoodSelectionProbability(), configAlg.getMaximumNumberOfReplacedSolutions(), configAlg.getNeighborSize());
+        return algorithm;
+    }
 
     /**
      * Create standard metaheuristic.
@@ -338,10 +350,11 @@ public class AlgorithmBuilder<S extends Solution<?>> {
                 return createSpea2(configAlg, configHeuristic);
             case "Gde3":
                 return createGde3(configAlg, configHeuristic);
+            case "MoeadDra":
+                return createMoead(configAlg, configHeuristic);
             default:
                 System.err.println("Algorithm not found");
                 return null;
         }
     }
-
 }

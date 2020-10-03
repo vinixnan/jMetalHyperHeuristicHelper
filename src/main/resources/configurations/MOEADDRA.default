@@ -1,9 +1,9 @@
 algorithmName = MoeadDra
-populationSize = 100
-archiveSize = 100
-maxIteractions = 750
-neighborSize = 10
+populationSize = 600
+archiveSize = 600
+maxIteractions = 500
+neighborSize = 20
 neighborhoodSelectionProbability = 0.9
-maximumNumberOfReplacedSolutions = 3
+maximumNumberOfReplacedSolutions = 2
 weightsPath = MOEAD_Weights
 moeadFunction =TCHE

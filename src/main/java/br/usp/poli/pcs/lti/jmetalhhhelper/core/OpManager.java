@@ -200,6 +200,12 @@ public class OpManager<S extends Solution<?>> implements Serializable {
         }
         
     }
+    
+    public void updateRewards(double reward) {
+        double[] rewards=new double[1];
+        rewards[0]=reward;
+        this.selector.updateReward(llh, rewards);
+    }
 
     public void generateNadir(List<S> population) {
         if (nadir == null) {
