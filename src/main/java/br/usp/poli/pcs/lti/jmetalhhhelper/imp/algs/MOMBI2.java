@@ -27,13 +27,14 @@ public class MOMBI2<S extends Solution<?>> extends Mombi2<S> {
     }
 
     protected List<S> generateUsingOpManager(List<S> population) {
-        selector.generateNadir(population);
-        List<S> offspringPopulation = new ArrayList<>(this.getMaxPopulationSize());
-        LowLevelHeuristic llh = selector.selectOp();
-        CrossoverOperator crossoverOp = (CrossoverOperator) llh.getCrossover().getOp();
-        MutationOperator mutationOp = (MutationOperator) llh.getMutation().getOp();
-        int numberOfParents = crossoverOp.getNumberOfRequiredParents();
-        for (int i = 0; i < this.getMaxPopulationSize(); i++) {
+        List<S> offspringPopulation = new ArrayList<>();
+        int i = 0;
+        int max = getMaxPopulationSize();
+        while (i < max) {
+            LowLevelHeuristic llh = selector.selectOp();
+            CrossoverOperator crossoverOp = (CrossoverOperator) llh.getCrossover().getOp();
+            MutationOperator mutationOp = (MutationOperator) llh.getMutation().getOp();
+            int numberOfParents = crossoverOp.getNumberOfRequiredParents();
             List<S> parents = new ArrayList<>();
             for (int j = 0; j < numberOfParents; j++) {
                 parents.add((S) selectionOperator.execute(population));
@@ -42,7 +43,8 @@ public class MOMBI2<S extends Solution<?>> extends Mombi2<S> {
                 ((DifferentialEvolution) crossoverOp).setCurrentSolution((DoubleSolution) population.get(i));
             }
             List<S> offspring = (List<S>) crossoverOp.execute(parents);
-            for (S s : offspring) {
+            for (int j = 0; j < offspring.size() && i < max; j++) {
+                S s=offspring.get(j);
                 if (mutationOp != null) {
                     mutationOp.execute(s);
                 }
@@ -54,10 +56,7 @@ public class MOMBI2<S extends Solution<?>> extends Mombi2<S> {
                 }
                 selector.assignTag(parents, s2, this);
                 offspringPopulation.add((S) s2);
-                //-----------------------------------
-                if (offspringPopulation.size() >= maxPopulationSize) {
-                    break;
-                }
+                i++;
             }
             selector.updateRewards(parents, offspring);
         }
@@ -71,7 +70,9 @@ public class MOMBI2<S extends Solution<?>> extends Mombi2<S> {
             ax.addAll(population);
             return generateUsingOpManager(ax);
         } else {
-            return super.reproduction(population);
+            List<S> offspringPopulation = super.reproduction(population);
+            offspringPopulation = evaluatePopulation(offspringPopulation);
+            return offspringPopulation;
         }
     }
 }

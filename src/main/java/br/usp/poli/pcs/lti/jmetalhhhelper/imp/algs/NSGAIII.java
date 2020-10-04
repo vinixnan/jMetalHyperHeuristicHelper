@@ -31,7 +31,8 @@ public class NSGAIII<S extends Solution<?>> extends NsgaIII<S> {
         CrossoverOperator crossoverOp = (CrossoverOperator) llh.getCrossover().getOp();
         MutationOperator mutationOp = (MutationOperator) llh.getMutation().getOp();
         int numberOfParents = crossoverOp.getNumberOfRequiredParents();
-        for (int i = 0; i < this.getMaxPopulationSize(); i++) {
+        int i=0;
+        while (i < this.getMaxPopulationSize()) {
             List<S> parents = new ArrayList<>();
             for (int j = 0; j < numberOfParents; j++) {
                 parents.add((S) selectionOperator.execute(population));
@@ -40,7 +41,8 @@ public class NSGAIII<S extends Solution<?>> extends NsgaIII<S> {
                 ((DifferentialEvolution) crossoverOp).setCurrentSolution((DoubleSolution) population.get(i));
             }
             List<S> offspring = (List<S>) crossoverOp.execute(parents);
-            for (S s : offspring) {
+            for (int j = 0; j < offspring.size() && i < getMaxPopulationSize(); j++) {
+                S s=offspring.get(j);
                 if (mutationOp != null) {
                     mutationOp.execute(s);
                 }
@@ -52,10 +54,7 @@ public class NSGAIII<S extends Solution<?>> extends NsgaIII<S> {
                 }
                 selector.assignTag(parents, s2, this);
                 offspringPopulation.add((S) s2);
-                //-----------------------------------
-                if (offspringPopulation.size() >= maxPopulationSize) {
-                    break;
-                }
+                i++;
             }
             selector.updateRewards(parents, offspring);
         }

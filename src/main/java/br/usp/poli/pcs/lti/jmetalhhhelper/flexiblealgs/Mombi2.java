@@ -69,6 +69,7 @@ public class Mombi2<S extends Solution<?>> extends MOMBI2<S> implements LLHInter
     public void initMetaheuristic(List<S> pop) {
         this.setPopulation(pop);
         this.evaluatePopulation(this.getPopulation());
+        selector.generateNadir(pop);
         initProgress();
         //specific GA needed computations
         this.specificMOEAComputations();
@@ -125,7 +126,6 @@ public class Mombi2<S extends Solution<?>> extends MOMBI2<S> implements LLHInter
     public void generateNewPopulation() {
         List<S> matingPopulation = selection(this.getPopulation());
         List<S> offspringPopulation = reproduction(matingPopulation);
-        offspringPopulation = evaluatePopulation(offspringPopulation);
         this.setPopulation(replacement(this.getPopulation(), offspringPopulation));
     }
 
