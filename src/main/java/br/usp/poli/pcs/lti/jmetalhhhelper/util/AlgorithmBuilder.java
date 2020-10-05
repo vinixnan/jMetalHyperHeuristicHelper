@@ -39,6 +39,7 @@ import org.uma.jmetal.util.pseudorandom.RandomGenerator;
 import br.usp.poli.pcs.lti.jmetalhhhelper.core.interfaces.LLHInterface;
 import br.usp.poli.pcs.lti.jmetalhhhelper.imp.algs.GDE3;
 import br.usp.poli.pcs.lti.jmetalhhhelper.imp.algs.IBEA;
+import br.usp.poli.pcs.lti.jmetalhhhelper.imp.algs.MOEADD;
 import br.usp.poli.pcs.lti.jmetalhhhelper.imp.algs.MOEADDRA;
 import br.usp.poli.pcs.lti.jmetalhhhelper.imp.algs.MOMBI2;
 import br.usp.poli.pcs.lti.jmetalhhhelper.imp.algs.NSGAII;
@@ -330,6 +331,13 @@ public class AlgorithmBuilder<S extends Solution<?>> {
         return algorithm;
     }
 
+    protected LLHInterface createMoeadD(ParametersforAlgorithm configAlg, ParametersforHeuristics configHeuristic) throws JMException {
+        CrossoverOperator crossover = this.generateCross(configHeuristic);
+        MutationOperator mutation = this.generateMuta(configHeuristic, configAlg.getMaxIteractions());
+        LLHInterface algorithm = new MOEADD(problem, configAlg.getPopulationSize(), configAlg.getPopulationSize(), configAlg.getMaxEvaluations(), crossover, mutation, configAlg.getMoeadFunction(), configAlg.getWeightsPath(), configAlg.getNeighborhoodSelectionProbability(), configAlg.getMaximumNumberOfReplacedSolutions(), configAlg.getNeighborSize());
+        return algorithm;
+    }
+
     protected LLHInterface createMombiII(ParametersforAlgorithm configAlg, ParametersforHeuristics configHeuristic) throws JMException {
         SelectionOperator selection = this.generateSelection();
         CrossoverOperator crossover = this.generateCross(configHeuristic);
@@ -342,7 +350,7 @@ public class AlgorithmBuilder<S extends Solution<?>> {
         SelectionOperator selection = this.generateSelection();
         CrossoverOperator crossover = this.generateCross(configHeuristic);
         MutationOperator mutation = this.generateMuta(configHeuristic, configAlg.getMaxIteractions());
-        NSGAIIIBuilder builder=new NSGAIIIBuilder(problem);
+        NSGAIIIBuilder builder = new NSGAIIIBuilder(problem);
         builder.setMutationOperator(mutation);
         builder.setSelectionOperator(selection);
         builder.setCrossoverOperator(crossover);
@@ -377,6 +385,8 @@ public class AlgorithmBuilder<S extends Solution<?>> {
                 return createGde3(configAlg, configHeuristic);
             case "MoeadDra":
                 return createMoead(configAlg, configHeuristic);
+            case "MoeaDD":
+                return createMoeadD(configAlg, configHeuristic);
             case "Mombi2":
                 return createMombiII(configAlg, configHeuristic);
             case "Nsgaiii":
