@@ -1,9 +1,9 @@
 algorithmName = MoeaDD
-populationSize = 600
-archiveSize = 600
-maxIteractions = 500
-neighborSize = 20
+populationSize = 91
+archiveSize = 91
+maxIteractions = 1000
+neighborSize = 9
 neighborhoodSelectionProbability = 0.9
-maximumNumberOfReplacedSolutions = 2
-weightsPath = MOEAD_Weights
+maximumNumberOfReplacedSolutions = 1
+weightsPath = WeightVectors
 moeadFunction =PBI

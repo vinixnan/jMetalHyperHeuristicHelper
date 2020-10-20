@@ -47,6 +47,8 @@ import br.usp.poli.pcs.lti.jmetalhhhelper.imp.algs.NSGAIII;
 import br.usp.poli.pcs.lti.jmetalhhhelper.imp.algs.SPEA2;
 import br.usp.poli.pcs.lti.jmetalhhhelper.imp.algs.mIBEA;
 import org.uma.jmetal.algorithm.multiobjective.nsgaiii.NSGAIIIBuilder;
+import org.uma.jmetal.operator.impl.selection.RandomSelection;
+import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
 
 /**
  * This class builds algorithms.
@@ -339,7 +341,7 @@ public class AlgorithmBuilder<S extends Solution<?>> {
     }
 
     protected LLHInterface createMombiII(ParametersforAlgorithm configAlg, ParametersforHeuristics configHeuristic) throws JMException {
-        SelectionOperator selection = this.generateSelection();
+        SelectionOperator selection = new BinaryTournamentSelection<>(new RankingAndCrowdingDistanceComparator<>());
         CrossoverOperator crossover = this.generateCross(configHeuristic);
         MutationOperator mutation = this.generateMuta(configHeuristic, configAlg.getMaxIteractions());
         LLHInterface algorithm = new MOMBI2(problem, configAlg.getMaxIteractions(), crossover, mutation, selection, new SequentialSolutionListEvaluator(), configAlg.getWeightsPath());
@@ -347,7 +349,7 @@ public class AlgorithmBuilder<S extends Solution<?>> {
     }
 
     protected LLHInterface createNsgaIII(ParametersforAlgorithm configAlg, ParametersforHeuristics configHeuristic) throws JMException {
-        SelectionOperator selection = this.generateSelection();
+        SelectionOperator selection = new RandomSelection();
         CrossoverOperator crossover = this.generateCross(configHeuristic);
         MutationOperator mutation = this.generateMuta(configHeuristic, configAlg.getMaxIteractions());
         NSGAIIIBuilder builder = new NSGAIIIBuilder(problem);
