@@ -389,6 +389,8 @@ public class AlgorithmBuilder<S extends Solution<?>> {
                 return createMoead(configAlg, configHeuristic);
             case "MoeaDD":
                 return createMoeadD(configAlg, configHeuristic);
+            case "MoeadDd":
+                return createMoeadD(configAlg, configHeuristic);
             case "Mombi2":
                 return createMombiII(configAlg, configHeuristic);
             case "Nsgaiii":
