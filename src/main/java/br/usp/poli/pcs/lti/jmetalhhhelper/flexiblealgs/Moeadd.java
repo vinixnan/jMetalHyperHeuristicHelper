@@ -4,6 +4,7 @@ import br.usp.poli.pcs.lti.jmetalhhhelper.core.OpManager;
 import br.usp.poli.pcs.lti.jmetalhhhelper.core.interfaces.LLHInterface;
 import java.util.ArrayList;
 import java.util.List;
+import org.uma.jmetal.algorithm.multiobjective.moead.MOEAD;
 import org.uma.jmetal.algorithm.multiobjective.moead.MOEADD;
 import org.uma.jmetal.algorithm.multiobjective.moead.util.MOEADUtils;
 import org.uma.jmetal.operator.CrossoverOperator;
@@ -11,6 +12,7 @@ import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.impl.crossover.DifferentialEvolutionCrossover;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.DoubleSolution;
+import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.point.impl.IdealPoint;
 import org.uma.jmetal.util.point.impl.NadirPoint;
 
@@ -18,7 +20,7 @@ import org.uma.jmetal.util.point.impl.NadirPoint;
  *
  * @author vinicius
  */
-public class Moeadd<S extends DoubleSolution> extends MOEADD implements LLHInterface<S> {
+public class Moeadd<S extends DoubleSolution> extends MOEADD<S> implements LLHInterface<S> {
 
     protected OpManager selector = new OpManager();
 
@@ -89,7 +91,7 @@ public class Moeadd<S extends DoubleSolution> extends MOEADD implements LLHInter
 
     @Override
     public void setCrossoverOperator(CrossoverOperator<S> co) {
-        this.crossoverOperator = (DifferentialEvolutionCrossover) co;
+        this.crossoverOperator = (CrossoverOperator<S>) (DifferentialEvolutionCrossover) co;
     }
 
     @Override
@@ -198,6 +200,251 @@ public class Moeadd<S extends DoubleSolution> extends MOEADD implements LLHInter
             updateArchive(child);
         }
         return population;
+    }
+
+    protected double fitnessFunction(S individual, double[] lambda) throws JMetalException {
+        double fitness;
+
+        if (MOEAD.FunctionType.TCHE.equals(functionType)) {
+            double maxFun = -1.0e+30;
+
+            for (int n = 0; n < problem.getNumberOfObjectives(); n++) {
+                double diff = Math.abs(individual.getObjective(n) - idealPoint.getValue(n));
+
+                double feval;
+                if (lambda[n] == 0) {
+                    feval = 0.0001 * diff;
+                } else {
+                    feval = diff * lambda[n];
+                }
+                if (feval > maxFun) {
+                    maxFun = feval;
+                }
+            }
+
+            fitness = maxFun;
+        } else if (MOEAD.FunctionType.AGG.equals(functionType)) {
+            double sum = 0.0;
+            for (int n = 0; n < problem.getNumberOfObjectives(); n++) {
+                sum += (lambda[n]) * individual.getObjective(n);
+            }
+
+            fitness = sum;
+
+        } else if (MOEAD.FunctionType.PBI.equals(functionType)) {
+            double d1, d2, nl;
+            double theta = 5.0;
+
+            d1 = d2 = nl = 0.0;
+
+            for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
+                d1 += (individual.getObjective(i) - idealPoint.getValue(i)) * lambda[i];
+                nl += Math.pow(lambda[i], 2.0);
+            }
+            nl = Math.sqrt(nl);
+            d1 = Math.abs(d1) / nl;
+
+            for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
+                d2 += Math.pow((individual.getObjective(i) - idealPoint.getValue(i)) - d1 * (lambda[i] / nl), 2.0);
+            }
+            d2 = Math.sqrt(d2);
+
+            fitness = (d1 + theta * d2);
+        } else {
+            throw new JMetalException(" MOEAD.fitnessFunction: unknown type " + functionType);
+        }
+        return fitness;
+    }
+    
+    
+
+    @Override
+    public void updateArchive(S indiv) {
+
+        // find the location of 'indiv'
+        setLocation(indiv, idealPoint.getValues(), nadirPoint.getValues());
+        int location = (int) indiv.getAttribute("region");
+
+        numRanks = nondominated_sorting_add(indiv);
+
+        if (numRanks == 1) {
+            deleteRankOne(indiv, location);
+        } else {
+            ArrayList<S> lastFront = new ArrayList<>(populationSize);
+            int frontSize = countRankOnes(numRanks - 1);
+            if (frontSize == 0) {  // the last non-domination level only contains 'indiv'
+                frontSize++;
+                lastFront.add(indiv);
+            } else {
+                for (int i = 0; i < populationSize; i++) {
+                    if (rankIdx[numRanks - 1][i] == 1) {
+                        lastFront.add((S) population.get(i));
+                    }
+                }
+                if (((int) indiv.getAttribute(ranking.getAttributeIdentifier())) == (numRanks - 1)) {
+//        if (rankSolution.getOrDefault(indiv, 0) == (numRanks - 1)) {
+                    frontSize++;
+                    lastFront.add(indiv);
+                }
+            }
+
+            if (frontSize == 1 && lastFront.get(0).equals(indiv)) {  // the last non-domination level only has 'indiv'
+                int curNC = countOnes(location);
+                if (curNC > 0) {  // if the subregion of 'indiv' has other solution, drop 'indiv'
+                    nondominated_sorting_delete(indiv);
+                } else {  // if the subregion of 'indiv' has no solution, keep 'indiv'
+                    deleteCrowdRegion1(indiv, location);
+                }
+            } else if (frontSize == 1 && !lastFront.get(0).equals(indiv)) { // the last non-domination level only has one solution, but not 'indiv'
+                int targetIdx = findPosition(lastFront.get(0));
+                int parentLocation = findRegion(targetIdx);
+                int curNC = countOnes(parentLocation);
+                if (parentLocation == location) {
+                    curNC++;
+                }
+
+                if (curNC == 1) {  // the subregion only has the solution 'targetIdx', keep solution 'targetIdx'
+                    deleteCrowdRegion2(indiv, location);
+                } else {  // the subregion contains some other solutions, drop solution 'targetIdx'
+                    int indivRank = (int) indiv.getAttribute(ranking.getAttributeIdentifier());
+                    int targetRank = (int) population.get(targetIdx).getAttribute(ranking.getAttributeIdentifier());
+                    rankIdx[targetRank][targetIdx] = 0;
+                    rankIdx[indivRank][targetIdx] = 1;
+
+                    S targetSol = population.get(targetIdx);
+
+                    replace(targetIdx, indiv);
+                    subregionIdx[parentLocation][targetIdx] = 0;
+                    subregionIdx[location][targetIdx] = 1;
+
+                    // update the non-domination level structure
+                    nondominated_sorting_delete(targetSol);
+                }
+            } else {
+
+                double indivFitness = fitnessFunction(indiv, lambda[location]);
+
+                // find the index of the solution in the last non-domination level, and its corresponding subregion
+                int[] idxArray = new int[frontSize];
+                int[] regionArray = new int[frontSize];
+
+                for (int i = 0; i < frontSize; i++) {
+                    idxArray[i] = findPosition(lastFront.get(i));
+                    if (idxArray[i] == -1) {
+                        regionArray[i] = location;
+                    } else {
+                        regionArray[i] = findRegion(idxArray[i]);
+                    }
+                }
+
+                // find the most crowded subregion, if more than one exist, keep them in 'crowdList'
+                ArrayList<Integer> crowdList = new ArrayList<>();
+                int crowdIdx;
+                int nicheCount = countOnes(regionArray[0]);
+                if (regionArray[0] == location) {
+                    nicheCount++;
+                }
+                crowdList.add(regionArray[0]);
+                for (int i = 1; i < frontSize; i++) {
+                    int curSize = countOnes(regionArray[i]);
+                    if (regionArray[i] == location) {
+                        curSize++;
+                    }
+                    if (curSize > nicheCount) {
+                        crowdList.clear();
+                        nicheCount = curSize;
+                        crowdList.add(regionArray[i]);
+                    } else if (curSize == nicheCount) {
+                        crowdList.add(regionArray[i]);
+                    }
+                }
+                // find the index of the most crowded subregion
+                if (crowdList.size() == 1) {
+                    crowdIdx = crowdList.get(0);
+                } else {
+                    int listLength = crowdList.size();
+                    crowdIdx = crowdList.get(0);
+                    double sumFitness = sumFitness(crowdIdx);
+                    if (crowdIdx == location) {
+                        sumFitness = sumFitness + indivFitness;
+                    }
+                    for (int i = 1; i < listLength; i++) {
+                        int curIdx = crowdList.get(i);
+                        double curFitness = sumFitness(curIdx);
+                        if (curIdx == location) {
+                            curFitness = curFitness + indivFitness;
+                        }
+                        if (curFitness > sumFitness) {
+                            crowdIdx = curIdx;
+                            sumFitness = curFitness;
+                        }
+                    }
+                }
+
+                switch (nicheCount) {
+                    case 0:
+                        System.out.println("Impossible empty subregion!!!");
+                        break;
+                    case 1:
+                        // if the subregion of each solution in the last non-domination level only has one solution, keep them all
+                        deleteCrowdRegion2(indiv, location);
+                        break;
+                    default:
+                        // delete the worst solution from the most crowded subregion in the last non-domination level
+                        ArrayList<Integer> list = new ArrayList<>();
+                        for (int i = 0; i < frontSize; i++) {
+                            if (regionArray[i] == crowdIdx) {
+                                list.add(i);
+                            }
+                        }
+                        if (list.isEmpty()) {
+                            System.out.println("Cannot happen!!!");
+                        } else {
+                            double maxFitness, curFitness;
+                            int targetIdx = list.get(0);
+                            if (idxArray[targetIdx] == -1) {
+                                maxFitness = indivFitness;
+                            } else {
+                                maxFitness = fitnessFunction(population.get(idxArray[targetIdx]), lambda[crowdIdx]);
+                            }
+                            for (int i = 1; i < list.size(); i++) {
+                                int curIdx = list.get(i);
+                                if (idxArray[curIdx] == -1) {
+                                    curFitness = indivFitness;
+                                } else {
+                                    curFitness = fitnessFunction(population.get(idxArray[curIdx]), lambda[crowdIdx]);
+                                }
+                                if (curFitness > maxFitness) {
+                                    targetIdx = curIdx;
+                                    maxFitness = curFitness;
+                                }
+                            }
+                            if (idxArray[targetIdx] == -1) {
+                                nondominated_sorting_delete(indiv);
+                            } else {
+                                //indiv.getRank();
+                                int indivRank = (int) indiv.getAttribute(ranking.getAttributeIdentifier());
+
+                                //int targetRank = ((DoubleSolution) population.get(idxArray[targetIdx])).getRank();
+                                int targetRank = (int) population.get(idxArray[targetIdx]).getAttribute(ranking.getAttributeIdentifier());
+
+                                rankIdx[targetRank][idxArray[targetIdx]] = 0;
+                                rankIdx[indivRank][idxArray[targetIdx]] = 1;
+
+                                S targetSol = population.get(idxArray[targetIdx]);
+
+                                replace(idxArray[targetIdx], indiv);
+                                subregionIdx[crowdIdx][idxArray[targetIdx]] = 0;
+                                subregionIdx[location][idxArray[targetIdx]] = 1;
+
+                                // update the non-domination level structure
+                                nondominated_sorting_delete(targetSol);
+                            }
+                        }
+                        break;
+                }
+            }
+        }
     }
 
     @Override

@@ -19,6 +19,14 @@ import org.uma.jmetal.problem.multiobjective.UF.UF6;
 import org.uma.jmetal.problem.multiobjective.UF.UF7;
 import org.uma.jmetal.problem.multiobjective.UF.UF8;
 import org.uma.jmetal.problem.multiobjective.UF.UF9;
+import org.uma.jmetal.problem.multiobjective.cre.CRE21;
+import org.uma.jmetal.problem.multiobjective.cre.CRE22;
+import org.uma.jmetal.problem.multiobjective.cre.CRE23;
+import org.uma.jmetal.problem.multiobjective.cre.CRE24;
+import org.uma.jmetal.problem.multiobjective.cre.CRE25;
+import org.uma.jmetal.problem.multiobjective.cre.CRE31;
+import org.uma.jmetal.problem.multiobjective.cre.CRE32;
+import org.uma.jmetal.problem.multiobjective.cre.CRE51;
 import org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1;
 import org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2;
 import org.uma.jmetal.problem.multiobjective.dtlz.DTLZ3;
@@ -26,6 +34,8 @@ import org.uma.jmetal.problem.multiobjective.dtlz.DTLZ4;
 import org.uma.jmetal.problem.multiobjective.dtlz.DTLZ5;
 import org.uma.jmetal.problem.multiobjective.dtlz.DTLZ6;
 import org.uma.jmetal.problem.multiobjective.dtlz.DTLZ7;
+import org.uma.jmetal.problem.multiobjective.maf.*;
+import org.uma.jmetal.problem.multiobjective.re.*;
 import org.uma.jmetal.problem.multiobjective.wfg.WFG1;
 import org.uma.jmetal.problem.multiobjective.wfg.WFG2;
 import org.uma.jmetal.problem.multiobjective.wfg.WFG3;
@@ -361,6 +371,201 @@ public class ProblemFactoryExtra extends ProblemFactory{
                 Logger.getLogger(ProblemFactoryExtra.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        else if (tipo.equalsIgnoreCase("MaF01")) {
+            Problem[] problems = {
+                new MaF01(calcMaf("MaF01", numberOfObjectives), numberOfObjectives),};
+            return problems;
+        }
+        else if (tipo.equalsIgnoreCase("MaF02")) {
+            Problem[] problems = {
+                new MaF02(calcMaf("MaF02", numberOfObjectives), numberOfObjectives),};
+            return problems;
+        }
+        else if (tipo.equalsIgnoreCase("MaF03")) {
+            Problem[] problems = {
+                new MaF03(calcMaf("MaF03", numberOfObjectives), numberOfObjectives),};
+            return problems;
+        }
+        else if (tipo.equalsIgnoreCase("MaF04")) {
+            Problem[] problems = {
+                new MaF04(calcMaf("MaF04", numberOfObjectives), numberOfObjectives),};
+            return problems;
+        }
+        else if (tipo.equalsIgnoreCase("MaF05")) {
+            Problem[] problems = {
+                new MaF05(calcMaf("MaF05", numberOfObjectives), numberOfObjectives),};
+            return problems;
+        }
+        else if (tipo.equalsIgnoreCase("MaF06")) {
+            Problem[] problems = {
+                new MaF06(calcMaf("MaF06", numberOfObjectives), numberOfObjectives),};
+            return problems;
+        }
+        else if (tipo.equalsIgnoreCase("MaF07")) {
+            Problem[] problems = {
+                new MaF07(calcMaf("MaF07", numberOfObjectives), numberOfObjectives),};
+            return problems;
+        }
+        else if (tipo.equalsIgnoreCase("MaF08")) {
+            Problem[] problems = {
+                new MaF08(calcMaf("MaF08", numberOfObjectives), numberOfObjectives),};
+            return problems;
+        }
+        else if (tipo.equalsIgnoreCase("MaF09")) {
+            Problem[] problems = {
+                new MaF09(calcMaf("MaF09", numberOfObjectives), numberOfObjectives),};
+            return problems;
+        }
+        else if (tipo.equalsIgnoreCase("MaF10")) {
+            Problem[] problems = {
+                new MaF10(calcMaf("MaF10", numberOfObjectives), numberOfObjectives),};
+            return problems;
+        }
+        else if (tipo.equalsIgnoreCase("MaF11")) {
+            Problem[] problems = {
+                new MaF11(calcMaf("MaF11", numberOfObjectives), numberOfObjectives),};
+            return problems;
+        }
+        else if (tipo.equalsIgnoreCase("MaF12")) {
+            Problem[] problems = {
+                new MaF12(calcMaf("MaF12", numberOfObjectives), numberOfObjectives),};
+            return problems;
+        }
+        else if (tipo.equalsIgnoreCase("MaF13")) {
+            Problem[] problems = {
+                new MaF13(calcMaf("MaF13", numberOfObjectives), numberOfObjectives),};
+            return problems;
+        }
+        else if (tipo.equalsIgnoreCase("MaF14")) {
+            Problem[] problems = {
+                new MaF14(calcMaf("MaF14", numberOfObjectives), numberOfObjectives),};
+            return problems;
+        }
+        else if (tipo.equalsIgnoreCase("MaF15")) {
+            Problem[] problems = {
+                new MaF15(calcMaf("MaF15", numberOfObjectives), numberOfObjectives),};
+            return problems;
+        }
+        else if (tipo.equalsIgnoreCase("RE21")) {
+            Problem[] problems = {
+                new RE21(),};
+            return problems;
+        }
+        else if (tipo.equalsIgnoreCase("RE22")) {
+            Problem[] problems = {
+                new RE22(),};
+            return problems;
+        }
+        else if (tipo.equalsIgnoreCase("RE23")) {
+            Problem[] problems = {
+                new RE23(),};
+            return problems;
+        }
+        else if (tipo.equalsIgnoreCase("RE24")) {
+            Problem[] problems = {
+                new RE24(),};
+            return problems;
+        }
+        else if (tipo.equalsIgnoreCase("RE25")) {
+            Problem[] problems = {
+                new RE25(),};
+            return problems;
+        }
+        else if (tipo.equalsIgnoreCase("RE31")) {
+            Problem[] problems = {
+                new RE31(),};
+            return problems;
+        }
+        else if (tipo.equalsIgnoreCase("RE32")) {
+            Problem[] problems = {
+                new RE32(),};
+            return problems;
+        }
+        else if (tipo.equalsIgnoreCase("RE33")) {
+            Problem[] problems = {
+                new RE33(),};
+            return problems;
+        }
+        else if (tipo.equalsIgnoreCase("RE34")) {
+            Problem[] problems = {
+                new RE34(),};
+            return problems;
+        }
+        else if (tipo.equalsIgnoreCase("RE35")) {
+            Problem[] problems = {
+                new RE35(),};
+            return problems;
+        }
+        else if (tipo.equalsIgnoreCase("RE36")) {
+            Problem[] problems = {
+                new RE36(),};
+            return problems;
+        }
+        else if (tipo.equalsIgnoreCase("RE37")) {
+            Problem[] problems = {
+                new RE37(),};
+            return problems;
+        }
+        else if (tipo.equalsIgnoreCase("RE41")) {
+            Problem[] problems = {
+                new RE41(),};
+            return problems;
+        }
+        else if (tipo.equalsIgnoreCase("RE42")) {
+            Problem[] problems = {
+                new RE42(),};
+            return problems;
+        }
+        else if (tipo.equalsIgnoreCase("RE61")) {
+            Problem[] problems = {
+                new RE61(),};
+            return problems;
+        }
+        else if (tipo.equalsIgnoreCase("RE91")) {
+            Problem[] problems = {
+                new RE91(),};
+            return problems;
+        }
+        else if (tipo.equalsIgnoreCase("CRE21")) {
+            Problem[] problems = {
+                new CRE21(),};
+            return problems;
+        }
+        else if (tipo.equalsIgnoreCase("CRE22")) {
+            Problem[] problems = {
+                new CRE22(),};
+            return problems;
+        }
+        else if (tipo.equalsIgnoreCase("CRE23")) {
+            Problem[] problems = {
+                new CRE23(),};
+            return problems;
+        }
+        else if (tipo.equalsIgnoreCase("CRE24")) {
+            Problem[] problems = {
+                new CRE24(),};
+            return problems;
+        }
+        else if (tipo.equalsIgnoreCase("CRE25")) {
+            Problem[] problems = {
+                new CRE25(),};
+            return problems;
+        }
+        else if (tipo.equalsIgnoreCase("CRE31")) {
+            Problem[] problems = {
+                new CRE31(),};
+            return problems;
+        }
+        else if (tipo.equalsIgnoreCase("CRE32")) {
+            Problem[] problems = {
+                new CRE32(),};
+            return problems;
+        }
+        else if (tipo.equalsIgnoreCase("CRE51")) {
+            Problem[] problems = {
+                new CRE51(),};
+            return problems;
+        }
         else {
             Problem[] problems = {
                 new WFG1(numberOfPositions, numberOfDistanceVariables, numberOfObjectives),
@@ -382,5 +587,81 @@ public class ProblemFactoryExtra extends ProblemFactory{
             return problems;
         }
         return null;
+    }
+    
+    public static int calcMaf(String problem, int m) {
+        int k, l;
+        /*
+             The number of variables is set
+                equals to M +K − 1 for MaF1 to MaF7 and MaF10 to MaF12, with K
+                defined for each problem; equals to 2 for MaF8 and MaF9; equals to
+                5 for MaF13; and 20 × M for MaF14 and MaF15 [6]. Therefore, the
+                number of iterations is computed as itmax = ⌊f emax /pop_size⌋.
+        */
+        
+        switch (problem) {
+            case "MaF01" -> {
+                k = 10;
+                return m + k - 1;
+            }
+            case "MaF02" -> {
+                k = 10;
+                return m + k - 1;
+            }
+            case "MaF03" -> {
+                k = 10;
+                return m + k - 1;
+            }
+            case "MaF04" -> {
+                k = 10;
+                return m + k - 1;
+            }
+            case "MaF05" -> {
+                k = 10;
+                return m + k - 1;
+            }
+            case "MaF06" -> {
+                k = 10;
+                return m + k - 1;
+            }
+            case "MaF07" -> {
+                k = 20;
+                return m + k - 1;
+            }
+            case "MaF08" -> {
+                return 2;
+            }
+            case "MaF09" -> {
+                return 2;
+            }
+            case "MaF10" -> {
+                k = m - 1;
+                l = 10;
+                return k + l;
+            }
+            case "MaF11" -> {
+                k = m - 1;
+                l = 10;
+                return k + l;
+            }
+            case "MaF12" -> {
+                k = m - 1;
+                l = 10;
+                return k + l;
+            }
+            case "MaF13" -> {
+                return 5;
+            }
+            case "MaF14" -> {
+                return m * 20;
+            }
+            case "MaF15" -> {
+                return m * 20;
+            }
+            default -> {
+                System.err.println("0");
+                return 0;
+            }
+        }
     }
 }

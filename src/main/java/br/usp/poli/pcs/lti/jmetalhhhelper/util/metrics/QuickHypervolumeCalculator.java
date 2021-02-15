@@ -39,6 +39,11 @@ public class QuickHypervolumeCalculator extends HypervolumeCalculator {
         super(numberOfObjectives, referenceFront);
     }
 
+    public QuickHypervolumeCalculator(int numberOfObjectives, Front referenceFront, boolean normalize) throws FileNotFoundException {
+        this(numberOfObjectives, referenceFront);
+        this.normalize = normalize;
+    }
+
     @Override
     public void updatePointsUsingNadir(double[] nadir) {
         maximumValues = nadir;
@@ -54,26 +59,33 @@ public class QuickHypervolumeCalculator extends HypervolumeCalculator {
     @Override
     public double calculate(Front front, double[] maximumValues, double[] minimumValues) {
         if (front != null && maximumValues != null && minimumValues != null) {
+            double[] references = new double[numberOfObjectives];
             try {
-                if(!this.isMinMaxTheSame(maximumValues, minimumValues)){
-                FrontNormalizer frontNormalizer = new FrontNormalizer(minimumValues, maximumValues);
-                front = frontNormalizer.normalize(front);
-            }
-            List<PointSolution> population = FrontUtils.convertFrontToSolutionList(front);
+                if (normalize) {
+                    if (!this.isMinMaxTheSame(maximumValues, minimumValues)) {
+                        FrontNormalizer frontNormalizer = new FrontNormalizer(minimumValues, maximumValues);
+                        front = frontNormalizer.normalize(front);
+                    }
+                    Arrays.fill(references, 1.01);
+                } else {
+                    references = maximumValues;
+                }
+
+                List<PointSolution> population = FrontUtils.convertFrontToSolutionList(front);
                 //Save population to file
-                long uId=System.currentTimeMillis();
-                Random rdn=new SecureRandom();
-                long snd=rdn.nextLong();
-                long snd2=rdn.nextLong();
-                String prefix=String.valueOf(uId)+String.valueOf(snd)+String.valueOf(snd2);
-                String path = System.getProperty("user.dir") + "/tempfront"+prefix;
+                long uId = System.currentTimeMillis();
+                Random rdn = new SecureRandom();
+                long snd = rdn.nextLong();
+                long snd2 = rdn.nextLong();
+                String prefix = String.valueOf(uId) + String.valueOf(snd) + String.valueOf(snd2);
+                String path = System.getProperty("user.dir") + "/tempfront" + prefix;
                 new SolutionListOutput(population)
                         .setSeparator(" ")
                         .setFunFileOutputContext(new DefaultFileOutputContext(path))
                         .print();
 
                 //read file to format as wfg hypervolume uses
-                Path filepath = (Path) Paths.get(System.getProperty("user.dir"), "tempfront"+prefix);
+                Path filepath = (Path) Paths.get(System.getProperty("user.dir"), "tempfront" + prefix);
                 List<String> lines = Files.readAllLines((java.nio.file.Path) filepath);
                 List<String> newPrinting = new ArrayList<>();
                 newPrinting.add("#");
@@ -92,20 +104,19 @@ public class QuickHypervolumeCalculator extends HypervolumeCalculator {
                         writer.println(str);
                     }
                     writer.close();
-                }
-                catch (IOException e) {
+                } catch (IOException e) {
                     // do something
                 }
 
                 //Call wfgHypervolume
-                String fileToExecute = "./qhyp/hyp"+this.numberOfObjectives;
+                String fileToExecute = "./qhyp/hyp" + this.numberOfObjectives;
                 ProcessBuilder pb = new ProcessBuilder();
                 List<String> commands = new ArrayList<>();
                 commands.add(fileToExecute);
                 commands.add(path);
                 //add reference point
                 for (int i = 0; i < this.numberOfObjectives; i++) {
-                    commands.add("1.00");
+                    commands.add(String.valueOf(references[i]));
                 }
                 pb.command(commands);
                 pb.redirectErrorStream(true);
@@ -119,7 +130,7 @@ public class QuickHypervolumeCalculator extends HypervolumeCalculator {
                 lines = new ArrayList<>();
                 String s = null;
                 while ((s = stdInput.readLine()) != null) {
-                    if(NumberUtils.isCreatable(s)){
+                    if (NumberUtils.isCreatable(s)) {
                         lines.add(s);
                     }
                 }
@@ -131,8 +142,7 @@ public class QuickHypervolumeCalculator extends HypervolumeCalculator {
                 file.delete();
 
                 return Double.parseDouble(result);
-            }
-            catch (IOException ex) {
+            } catch (IOException ex) {
                 Logger.getLogger(QuickHypervolumeCalculator.class.getName()).log(Level.SEVERE, null, ex);
             }
 

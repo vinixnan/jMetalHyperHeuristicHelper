@@ -33,6 +33,11 @@ public class IgdCalculator extends Calculator {
         this.indicatorName = "IGD";
         this.lowerValuesAreBetter = igd.isTheLowerTheIndicatorValueTheBetter();
     }
+    
+    public IgdCalculator(int numberOfObjectives, Front referenceFront, boolean normalize) throws FileNotFoundException {
+        this(numberOfObjectives, referenceFront);
+        this.normalize = normalize;
+    }
 
     /**
      * Instantiates a new Igd calculator.
@@ -51,9 +56,11 @@ public class IgdCalculator extends Calculator {
     public double calculate(Front front, double[] maximumValues, double[] minimumValues) {
         double val = 1;
         if (maximumValues != null && minimumValues != null) {
-            if(!this.isMinMaxTheSame(maximumValues, minimumValues)){
-                FrontNormalizer frontNormalizer = new FrontNormalizer(minimumValues, maximumValues);
-                front = frontNormalizer.normalize(front);
+            if (normalize) {
+                if (!this.isMinMaxTheSame(maximumValues, minimumValues)) {
+                    FrontNormalizer frontNormalizer = new FrontNormalizer(minimumValues, maximumValues);
+                    front = frontNormalizer.normalize(front);
+                }
             }
             List<PointSolution> normalizedPopulation = FrontUtils.convertFrontToSolutionList(front);
             val = igd.evaluate(normalizedPopulation);

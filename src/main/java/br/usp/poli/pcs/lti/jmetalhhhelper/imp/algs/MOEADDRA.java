@@ -2,6 +2,7 @@ package br.usp.poli.pcs.lti.jmetalhhhelper.imp.algs;
 
 import br.usp.poli.pcs.lti.jmetalhhhelper.core.DoubleTaggedSolution;
 import br.usp.poli.pcs.lti.jmetalhhhelper.core.LowLevelHeuristic;
+import br.usp.poli.pcs.lti.jmetalhhhelper.core.MOEADReward;
 import br.usp.poli.pcs.lti.jmetalhhhelper.flexiblealgs.MoeadDRA;
 import br.usp.poli.pcs.lti.jmetalhhhelper.imp.crossover.DifferentialEvolution;
 import java.security.SecureRandom;
@@ -21,16 +22,14 @@ import org.uma.jmetal.solution.impl.DefaultDoubleSolution;
  */
 public class MOEADDRA extends MoeadDRA {
 
-    protected boolean useFIR;
-
     public MOEADDRA(Problem<DoubleSolution> problem, int populationSize, int resultPopulationSize, int maxEvaluations, MutationOperator<DoubleSolution> mutation, CrossoverOperator<DoubleSolution> crossover, FunctionType functionType, String dataDirectory, double neighborhoodSelectionProbability, int maximumNumberOfReplacedSolutions, int neighborSize) {
         super(problem, populationSize, resultPopulationSize, maxEvaluations, mutation, crossover, functionType, dataDirectory, neighborhoodSelectionProbability, maximumNumberOfReplacedSolutions, neighborSize);
-        useFIR = false;
     }
 
     @Override
     public List<DoubleSolution> executeMethod() {
         if (selector.isHHInUse()) {
+            boolean isMOEADRewardinUse=this.selector.getRewardmethod() instanceof MOEADReward;
             selector.generateNadir(population);
             int[] permutation = new int[populationSize];
             MOEADUtils.randomPermutation(permutation, populationSize);
@@ -70,27 +69,18 @@ public class MOEADDRA extends MoeadDRA {
                     evaluations++;
                     idealPoint.update(s2.getObjectives());
                     updateNeighborhood(s2, subProblemId, neighborType);
-                    //improvement_[cur_id]
+                    if(isMOEADRewardinUse){
+                        selector.updateRewards(improvement_[subProblemId]);
+                    }
                 }
-                if (useFIR) {
-                    selector.updateRewards(improvement_[subProblemId]);
-                } else {
-                    selector.updateRewards(parents, offspring);
+                if (!isMOEADRewardinUse) {
+                     selector.updateRewards(parents, offspring);
                 }
-
             }
+            //selector.getSelector().updateGeneralPerformance(population);
         } else {
             super.executeMethod();
         }
         return population;
     }
-
-    public boolean isUseFIR() {
-        return useFIR;
-    }
-
-    public void setUseFIR(boolean useFIR) {
-        this.useFIR = useFIR;
-    }
-
 }

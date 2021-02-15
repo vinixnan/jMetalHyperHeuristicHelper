@@ -126,10 +126,14 @@ public class IndicatorFactory {
     else{
         String pfpath =
         "pareto_fronts/" + problem.getName() + "." + problem.getNumberOfObjectives() + "D.pf";
-        if(problem.getName().equals("UF")){
+        if(problem.getName().contains("UF")){
             pfpath =
             "pareto_fronts/" + problem.getClass().getSimpleName() + "." + problem.getNumberOfObjectives() + "D.pf";
         }
+        else if (problem.getName().contains("MaF")) {
+            pfpath = "pareto_fronts/" + problem.getName() + "_" + problem.getNumberOfObjectives() + ".ref";
+        }
+        System.out.println(pfpath);
         pf=new ArrayFront(pfpath);
     }
     switch (qualityIndicatorName) {
