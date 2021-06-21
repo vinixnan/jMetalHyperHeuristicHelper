@@ -87,10 +87,10 @@
                 <version>1.6.7</version>
                 <configuration>
                     <targetClasses>
-                        <param>ie.ucd.cs.mas3.normsystem*</param>
+                        <param>br.usp.poli.pcs.lti.jmetalbridge*</param>
                     </targetClasses>
                     <targetTests>
-                        <param>ie.ucd.cs.mas3.normsystem*</param>
+                        <param>br.usp.poli.pcs.lti.jmetalbridge*</param>
                     </targetTests>
                 </configuration>
             </plugin>
