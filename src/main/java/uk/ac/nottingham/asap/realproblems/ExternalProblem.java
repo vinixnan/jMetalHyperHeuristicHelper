@@ -19,16 +19,16 @@ import org.uma.jmetal.solution.DoubleSolution;
  */
 public abstract class ExternalProblem extends AbstractDoubleProblem implements RealWorldProblem {
 
-    protected boolean linux;
+    protected boolean windows;
     protected int qtdEvaluated;
 
     public ExternalProblem() {
-        linux = (System.getProperty("os.name").equalsIgnoreCase("Linux"));
+        windows = (System.getProperty("os.name").equalsIgnoreCase("Windows"));
         qtdEvaluated = 0;
     }
 
-    protected boolean isLinux() {
-        return linux;
+    protected boolean isWindows() {
+        return windows;
     }
 
     protected double[] callExternalEvaluation(String problemName, double[] x, int m) {
@@ -36,7 +36,7 @@ public abstract class ExternalProblem extends AbstractDoubleProblem implements R
         Arrays.fill(toReturn, 1.0);
         //Call wfgHypervolume
         String fileToExecute = "./realworld";
-        if (!isLinux()) {
+        if (isWindows()) {
             fileToExecute += ".exe";
         }
         ProcessBuilder pb = new ProcessBuilder();
