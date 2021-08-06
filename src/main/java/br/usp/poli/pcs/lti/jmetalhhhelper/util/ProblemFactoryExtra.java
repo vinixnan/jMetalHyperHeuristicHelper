@@ -1,6 +1,5 @@
 package br.usp.poli.pcs.lti.jmetalhhhelper.util;
 
-
 import br.usp.poli.pcs.lti.jmetalproblems.problems.*;
 import br.usp.poli.pcs.lti.jmetalproblems.problems.VC.*;
 import br.usp.poli.pcs.lti.jmetalproblems.util.ProblemFactory;
@@ -57,8 +56,9 @@ import uk.ac.nottingham.asap.realproblems.*;
  *
  * @author vinicius
  */
-public class ProblemFactoryExtra extends ProblemFactory{
-     /**
+public class ProblemFactoryExtra extends ProblemFactory {
+
+    /**
      * Get continuous problems problem [ ].
      *
      * @param tipo the tipo
@@ -68,15 +68,14 @@ public class ProblemFactoryExtra extends ProblemFactory{
      * @return the problem [ ]
      */
     public static Problem[] getProblems(String tipo, int numberOfPositions,
-            int numberOfDistanceVariables, int numberOfObjectives){
+            int numberOfDistanceVariables, int numberOfObjectives) {
         int N = 2;//in contest
         double epsilon = 0.1;
         if (tipo.equalsIgnoreCase("WFG1")) {
             Problem[] problems = {
                 new WFG1(numberOfPositions, numberOfDistanceVariables, numberOfObjectives),};
             return problems;
-        }
-        else if (tipo.equalsIgnoreCase("WFG2")) {
+        } else if (tipo.equalsIgnoreCase("WFG2")) {
             Problem[] problems = {
                 new WFG2(numberOfPositions, numberOfDistanceVariables, numberOfObjectives),};
             return problems;
@@ -232,79 +231,63 @@ public class ProblemFactoryExtra extends ProblemFactory{
             Problem[] problems = {
                 new CrashWorthiness(), new CarSideImpact(), new WaterReal(), new Machining()};
             return problems;
-        } 
-        else if (tipo.equalsIgnoreCase("CrashWorthiness")) {
+        } else if (tipo.equalsIgnoreCase("CrashWorthiness")) {
             Problem[] problems = {
                 new CrashWorthiness()};
             return problems;
-        }
-        else if (tipo.equalsIgnoreCase("CarSideImpact")) {
+        } else if (tipo.equalsIgnoreCase("CarSideImpact")) {
             Problem[] problems = {
                 new CarSideImpact()};
             return problems;
-        }
-        else if (tipo.equalsIgnoreCase("Water")) {
+        } else if (tipo.equalsIgnoreCase("Water")) {
             Problem[] problems = {
                 new WaterReal()};
             return problems;
-        }
-        else if (tipo.equalsIgnoreCase("Machining")) {
+        } else if (tipo.equalsIgnoreCase("Machining")) {
             Problem[] problems = {
                 new Machining()};
             return problems;
-        }
-        else if (tipo.equalsIgnoreCase("VibratingPlatformDesign")) {
+        } else if (tipo.equalsIgnoreCase("VibratingPlatformDesign")) {
             Problem[] problems = {
                 new VibratingPlatformDesign()};
             return problems;
-        }
-        else if (tipo.equalsIgnoreCase("OpticalFilter")) {
+        } else if (tipo.equalsIgnoreCase("OpticalFilter")) {
             Problem[] problems = {
                 new OpticalFilter()};
             return problems;
-        }
-        else if (tipo.equalsIgnoreCase("WeldedBeamDesign")) {
+        } else if (tipo.equalsIgnoreCase("WeldedBeamDesign")) {
             Problem[] problems = {
                 new WeldedBeamDesign()};
             return problems;
-        }
-        else if (tipo.equalsIgnoreCase("DiskBrakeDesign")) {
+        } else if (tipo.equalsIgnoreCase("DiskBrakeDesign")) {
             Problem[] problems = {
                 new DiskBrakeDesign()};
             return problems;
-        }
-        else if (tipo.equalsIgnoreCase("HeatExchanger")) {
+        } else if (tipo.equalsIgnoreCase("HeatExchanger")) {
             Problem[] problems = {
                 new HeatExchanger()};
             return problems;
-        }
-        else if (tipo.equalsIgnoreCase("HydroDynamics")) {
+        } else if (tipo.equalsIgnoreCase("HydroDynamics")) {
             Problem[] problems = {
                 new HydroDynamics()};
             return problems;
-        }
-        
-        else if (tipo.equalsIgnoreCase("AucMaximization")) {
+        } else if (tipo.equalsIgnoreCase("AucMaximization")) {
             Problem[] problems = {
                 new AucMaximization()};
             return problems;
-        }
-        else if (tipo.equalsIgnoreCase("FacilityPlacement")) {
+        } else if (tipo.equalsIgnoreCase("FacilityPlacement")) {
             Problem[] problems = {
                 new FacilityPlacement()};
             return problems;
-        }
-        else if (tipo.equalsIgnoreCase("NeuralNetDoublePoleBalancing")) {
+        } else if (tipo.equalsIgnoreCase("NeuralNetDoublePoleBalancing")) {
             Problem[] problems = {
                 new NeuralNetDoublePoleBalancing()};
             return problems;
-        }
-        else if (tipo.equalsIgnoreCase("KernelRidgeRegressionParameterTuning")) {
+        } else if (tipo.equalsIgnoreCase("KernelRidgeRegressionParameterTuning")) {
             Problem[] problems = {
                 new KernelRidgeRegressionParameterTuning()};
             return problems;
-        }
-        else if (tipo.equalsIgnoreCase("VC1")) {
+        } else if (tipo.equalsIgnoreCase("VC1")) {
             try {
                 Problem[] problems = {
                     new VC1()};
@@ -312,8 +295,7 @@ public class ProblemFactoryExtra extends ProblemFactory{
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(ProblemFactory.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }
-        else if (tipo.equalsIgnoreCase("VC2")) {
+        } else if (tipo.equalsIgnoreCase("VC2")) {
             try {
                 Problem[] problems = {
                     new VC2()};
@@ -321,8 +303,7 @@ public class ProblemFactoryExtra extends ProblemFactory{
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(ProblemFactory.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }
-        else if (tipo.equalsIgnoreCase("VC3")) {
+        } else if (tipo.equalsIgnoreCase("VC3")) {
             try {
                 Problem[] problems = {
                     new VC3()};
@@ -330,8 +311,7 @@ public class ProblemFactoryExtra extends ProblemFactory{
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(ProblemFactory.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }
-        else if (tipo.equalsIgnoreCase("VC4")) {
+        } else if (tipo.equalsIgnoreCase("VC4")) {
             try {
                 Problem[] problems = {
                     new VC4()};
@@ -339,234 +319,189 @@ public class ProblemFactoryExtra extends ProblemFactory{
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(ProblemFactory.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }
-        else if (tipo.equalsIgnoreCase("Poloni")) {
+        } else if (tipo.equalsIgnoreCase("Poloni")) {
             Problem[] problems = {
                 new Poloni()};
             return problems;
-        }
-        else if (tipo.equalsIgnoreCase("FourBarTruss")) {
+        } else if (tipo.equalsIgnoreCase("FourBarTruss")) {
             Problem[] problems = {
                 new FourBarTrussReal()};
             return problems;
-        }
-        else if (tipo.equalsIgnoreCase("Quagliarella")) {
+        } else if (tipo.equalsIgnoreCase("Quagliarella")) {
             Problem[] problems = {
                 new Quagliarella()};
             return problems;
-        }
-        else if (tipo.equalsIgnoreCase("Golinski")) {
+        } else if (tipo.equalsIgnoreCase("Golinski")) {
             Problem[] problems = {
                 new GolinskiReal()};
             return problems;
-        }
-         else if (tipo.equalsIgnoreCase("Ebes")) {
+        } else if (tipo.equalsIgnoreCase("Ebes")) {
             try {
-                String ebesFileName="Mobile_Bridge_25N_35B_8G_16OrdZXY.ebe";
-                String[] objectiveList={"W","D", "SSAE", "ENS", "MDV"};
+                String ebesFileName = "Mobile_Bridge_25N_35B_8G_16OrdZXY.ebe";
+                String[] objectiveList = {"W", "D", "SSAE", "ENS", "MDV"};
                 Problem[] problems = {
                     new EbesReal(ebesFileName, objectiveList)};
                 return problems;
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(ProblemFactoryExtra.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }
-        else if (tipo.equalsIgnoreCase("MaF01")) {
+        } else if (tipo.equalsIgnoreCase("MaF01")) {
             Problem[] problems = {
                 new MaF01(calcMaf("MaF01", numberOfObjectives), numberOfObjectives),};
             return problems;
-        }
-        else if (tipo.equalsIgnoreCase("MaF02")) {
+        } else if (tipo.equalsIgnoreCase("MaF02")) {
             Problem[] problems = {
                 new MaF02(calcMaf("MaF02", numberOfObjectives), numberOfObjectives),};
             return problems;
-        }
-        else if (tipo.equalsIgnoreCase("MaF03")) {
+        } else if (tipo.equalsIgnoreCase("MaF03")) {
             Problem[] problems = {
                 new MaF03(calcMaf("MaF03", numberOfObjectives), numberOfObjectives),};
             return problems;
-        }
-        else if (tipo.equalsIgnoreCase("MaF04")) {
+        } else if (tipo.equalsIgnoreCase("MaF04")) {
             Problem[] problems = {
                 new MaF04(calcMaf("MaF04", numberOfObjectives), numberOfObjectives),};
             return problems;
-        }
-        else if (tipo.equalsIgnoreCase("MaF05")) {
+        } else if (tipo.equalsIgnoreCase("MaF05")) {
             Problem[] problems = {
                 new MaF05(calcMaf("MaF05", numberOfObjectives), numberOfObjectives),};
             return problems;
-        }
-        else if (tipo.equalsIgnoreCase("MaF06")) {
+        } else if (tipo.equalsIgnoreCase("MaF06")) {
             Problem[] problems = {
                 new MaF06(calcMaf("MaF06", numberOfObjectives), numberOfObjectives),};
             return problems;
-        }
-        else if (tipo.equalsIgnoreCase("MaF07")) {
+        } else if (tipo.equalsIgnoreCase("MaF07")) {
             Problem[] problems = {
                 new MaF07(calcMaf("MaF07", numberOfObjectives), numberOfObjectives),};
             return problems;
-        }
-        else if (tipo.equalsIgnoreCase("MaF08")) {
+        } else if (tipo.equalsIgnoreCase("MaF08")) {
             Problem[] problems = {
                 new MaF08(calcMaf("MaF08", numberOfObjectives), numberOfObjectives),};
             return problems;
-        }
-        else if (tipo.equalsIgnoreCase("MaF09")) {
+        } else if (tipo.equalsIgnoreCase("MaF09")) {
             Problem[] problems = {
                 new MaF09(calcMaf("MaF09", numberOfObjectives), numberOfObjectives),};
             return problems;
-        }
-        else if (tipo.equalsIgnoreCase("MaF10")) {
+        } else if (tipo.equalsIgnoreCase("MaF10")) {
             Problem[] problems = {
                 new MaF10(calcMaf("MaF10", numberOfObjectives), numberOfObjectives),};
             return problems;
-        }
-        else if (tipo.equalsIgnoreCase("MaF11")) {
+        } else if (tipo.equalsIgnoreCase("MaF11")) {
             Problem[] problems = {
                 new MaF11(calcMaf("MaF11", numberOfObjectives), numberOfObjectives),};
             return problems;
-        }
-        else if (tipo.equalsIgnoreCase("MaF12")) {
+        } else if (tipo.equalsIgnoreCase("MaF12")) {
             Problem[] problems = {
                 new MaF12(calcMaf("MaF12", numberOfObjectives), numberOfObjectives),};
             return problems;
-        }
-        else if (tipo.equalsIgnoreCase("MaF13")) {
+        } else if (tipo.equalsIgnoreCase("MaF13")) {
             Problem[] problems = {
                 new MaF13(calcMaf("MaF13", numberOfObjectives), numberOfObjectives),};
             return problems;
-        }
-        else if (tipo.equalsIgnoreCase("MaF14")) {
+        } else if (tipo.equalsIgnoreCase("MaF14")) {
             Problem[] problems = {
                 new MaF14(calcMaf("MaF14", numberOfObjectives), numberOfObjectives),};
             return problems;
-        }
-        else if (tipo.equalsIgnoreCase("MaF15")) {
+        } else if (tipo.equalsIgnoreCase("MaF15")) {
             Problem[] problems = {
                 new MaF15(calcMaf("MaF15", numberOfObjectives), numberOfObjectives),};
             return problems;
-        }
-        else if (tipo.equalsIgnoreCase("RE21")) {
+        } else if (tipo.equalsIgnoreCase("RE21")) {
             Problem[] problems = {
                 new RE21(),};
             return problems;
-        }
-        else if (tipo.equalsIgnoreCase("RE22")) {
+        } else if (tipo.equalsIgnoreCase("RE22")) {
             Problem[] problems = {
                 new RE22(),};
             return problems;
-        }
-        else if (tipo.equalsIgnoreCase("RE23")) {
+        } else if (tipo.equalsIgnoreCase("RE23")) {
             Problem[] problems = {
                 new RE23(),};
             return problems;
-        }
-        else if (tipo.equalsIgnoreCase("RE24")) {
+        } else if (tipo.equalsIgnoreCase("RE24")) {
             Problem[] problems = {
                 new RE24(),};
             return problems;
-        }
-        else if (tipo.equalsIgnoreCase("RE25")) {
+        } else if (tipo.equalsIgnoreCase("RE25")) {
             Problem[] problems = {
                 new RE25(),};
             return problems;
-        }
-        else if (tipo.equalsIgnoreCase("RE31")) {
+        } else if (tipo.equalsIgnoreCase("RE31")) {
             Problem[] problems = {
                 new RE31(),};
             return problems;
-        }
-        else if (tipo.equalsIgnoreCase("RE32")) {
+        } else if (tipo.equalsIgnoreCase("RE32")) {
             Problem[] problems = {
                 new RE32(),};
             return problems;
-        }
-        else if (tipo.equalsIgnoreCase("RE33")) {
+        } else if (tipo.equalsIgnoreCase("RE33")) {
             Problem[] problems = {
                 new RE33(),};
             return problems;
-        }
-        else if (tipo.equalsIgnoreCase("RE34")) {
+        } else if (tipo.equalsIgnoreCase("RE34")) {
             Problem[] problems = {
                 new RE34(),};
             return problems;
-        }
-        else if (tipo.equalsIgnoreCase("RE35")) {
+        } else if (tipo.equalsIgnoreCase("RE35")) {
             Problem[] problems = {
                 new RE35(),};
             return problems;
-        }
-        else if (tipo.equalsIgnoreCase("RE36")) {
+        } else if (tipo.equalsIgnoreCase("RE36")) {
             Problem[] problems = {
                 new RE36(),};
             return problems;
-        }
-        else if (tipo.equalsIgnoreCase("RE37")) {
+        } else if (tipo.equalsIgnoreCase("RE37")) {
             Problem[] problems = {
                 new RE37(),};
             return problems;
-        }
-        else if (tipo.equalsIgnoreCase("RE41")) {
+        } else if (tipo.equalsIgnoreCase("RE41")) {
             Problem[] problems = {
                 new RE41(),};
             return problems;
-        }
-        else if (tipo.equalsIgnoreCase("RE42")) {
+        } else if (tipo.equalsIgnoreCase("RE42")) {
             Problem[] problems = {
                 new RE42(),};
             return problems;
-        }
-        else if (tipo.equalsIgnoreCase("RE61")) {
+        } else if (tipo.equalsIgnoreCase("RE61")) {
             Problem[] problems = {
                 new RE61(),};
             return problems;
-        }
-        else if (tipo.equalsIgnoreCase("RE91")) {
+        } else if (tipo.equalsIgnoreCase("RE91")) {
             Problem[] problems = {
                 new RE91(),};
             return problems;
-        }
-        else if (tipo.equalsIgnoreCase("CRE21")) {
+        } else if (tipo.equalsIgnoreCase("CRE21")) {
             Problem[] problems = {
                 new CRE21(),};
             return problems;
-        }
-        else if (tipo.equalsIgnoreCase("CRE22")) {
+        } else if (tipo.equalsIgnoreCase("CRE22")) {
             Problem[] problems = {
                 new CRE22(),};
             return problems;
-        }
-        else if (tipo.equalsIgnoreCase("CRE23")) {
+        } else if (tipo.equalsIgnoreCase("CRE23")) {
             Problem[] problems = {
                 new CRE23(),};
             return problems;
-        }
-        else if (tipo.equalsIgnoreCase("CRE24")) {
+        } else if (tipo.equalsIgnoreCase("CRE24")) {
             Problem[] problems = {
                 new CRE24(),};
             return problems;
-        }
-        else if (tipo.equalsIgnoreCase("CRE25")) {
+        } else if (tipo.equalsIgnoreCase("CRE25")) {
             Problem[] problems = {
                 new CRE25(),};
             return problems;
-        }
-        else if (tipo.equalsIgnoreCase("CRE31")) {
+        } else if (tipo.equalsIgnoreCase("CRE31")) {
             Problem[] problems = {
                 new CRE31(),};
             return problems;
-        }
-        else if (tipo.equalsIgnoreCase("CRE32")) {
+        } else if (tipo.equalsIgnoreCase("CRE32")) {
             Problem[] problems = {
                 new CRE32(),};
             return problems;
-        }
-        else if (tipo.equalsIgnoreCase("CRE51")) {
+        } else if (tipo.equalsIgnoreCase("CRE51")) {
             Problem[] problems = {
                 new CRE51(),};
             return problems;
-        }
-        else {
+        } else {
             Problem[] problems = {
                 new WFG1(numberOfPositions, numberOfDistanceVariables, numberOfObjectives),
                 new WFG2(numberOfPositions, numberOfDistanceVariables, numberOfObjectives),
@@ -588,7 +523,7 @@ public class ProblemFactoryExtra extends ProblemFactory{
         }
         return null;
     }
-    
+
     public static int calcMaf(String problem, int m) {
         int k, l;
         /*
@@ -597,71 +532,70 @@ public class ProblemFactoryExtra extends ProblemFactory{
                 defined for each problem; equals to 2 for MaF8 and MaF9; equals to
                 5 for MaF13; and 20 × M for MaF14 and MaF15 [6]. Therefore, the
                 number of iterations is computed as itmax = ⌊f emax /pop_size⌋.
-        */
-        
+         */
+
         switch (problem) {
-            case "MaF01" -> {
+            case "MaF01":
                 k = 10;
                 return m + k - 1;
-            }
-            case "MaF02" -> {
+
+            case "MaF02":
                 k = 10;
                 return m + k - 1;
-            }
-            case "MaF03" -> {
+
+            case "MaF03":
                 k = 10;
                 return m + k - 1;
-            }
-            case "MaF04" -> {
+
+            case "MaF04":
                 k = 10;
                 return m + k - 1;
-            }
-            case "MaF05" -> {
+
+            case "MaF05":
                 k = 10;
                 return m + k - 1;
-            }
-            case "MaF06" -> {
+
+            case "MaF06":
                 k = 10;
                 return m + k - 1;
-            }
-            case "MaF07" -> {
+
+            case "MaF07":
                 k = 20;
                 return m + k - 1;
-            }
-            case "MaF08" -> {
+
+            case "MaF08":
                 return 2;
-            }
-            case "MaF09" -> {
+
+            case "MaF09":
                 return 2;
-            }
-            case "MaF10" -> {
+
+            case "MaF10":
                 k = m - 1;
                 l = 10;
                 return k + l;
-            }
-            case "MaF11" -> {
+
+            case "MaF11":
                 k = m - 1;
                 l = 10;
                 return k + l;
-            }
-            case "MaF12" -> {
+
+            case "MaF12":
                 k = m - 1;
                 l = 10;
                 return k + l;
-            }
-            case "MaF13" -> {
+
+            case "MaF13":
                 return 5;
-            }
-            case "MaF14" -> {
+
+            case "MaF14":
                 return m * 20;
-            }
-            case "MaF15" -> {
+
+            case "MaF15":
                 return m * 20;
-            }
-            default -> {
+
+            default:
                 System.err.println("0");
                 return 0;
-            }
         }
     }
 }
