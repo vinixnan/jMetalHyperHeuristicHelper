@@ -48,18 +48,17 @@
         <dependency>
             <groupId>org.uma.jmetal</groupId>
             <artifactId>jmetal-core</artifactId>
-            <version>5.7</version>
-            <type>jar</type>
+            <version>5.9</version>
         </dependency>
         <dependency>
             <groupId>org.uma.jmetal</groupId>
             <artifactId>jmetal-algorithm</artifactId>
-            <version>5.7</version>
+            <version>5.9</version>
         </dependency>
         <dependency>
             <groupId>org.uma.jmetal</groupId>
             <artifactId>jmetal-problem</artifactId>
-            <version>5.7</version>
+            <version>5.9</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -70,12 +69,11 @@
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>30.1.1-jre</version>
-            <type>jar</type>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-csv</artifactId>
-            <version>1.8</version>
+            <version>1.9.0</version>
         </dependency>
     </dependencies>
     <build>
