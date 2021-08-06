@@ -146,7 +146,9 @@ public class Moeadd<S extends DoubleSolution> extends MOEADD<S> implements LLHIn
             List<S> front = ranking.getSubfront(curRank);
             for (S s : front) {
                 int position = this.population.indexOf(s);
-                rankIdx[curRank][position] = 1;
+                if(position < rankIdx[curRank].length){
+                    rankIdx[curRank][position] = 1;
+                }
             }
         }
     }
@@ -200,6 +202,14 @@ public class Moeadd<S extends DoubleSolution> extends MOEADD<S> implements LLHIn
             updateArchive(child);
         }
         return population;
+    }
+    
+    public void updateAll(List<S> pop){
+        for(S s : pop){
+            idealPoint.update(s.getObjectives());
+            nadirPoint.update(s.getObjectives());
+            updateArchive(s);
+        }
     }
 
     protected double fitnessFunction(S individual, double[] lambda) throws JMetalException {

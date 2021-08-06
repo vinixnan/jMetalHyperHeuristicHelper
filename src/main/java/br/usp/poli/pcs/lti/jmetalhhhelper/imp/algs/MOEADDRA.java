@@ -25,6 +25,15 @@ public class MOEADDRA extends MoeadDRA {
     public MOEADDRA(Problem<DoubleSolution> problem, int populationSize, int resultPopulationSize, int maxEvaluations, MutationOperator<DoubleSolution> mutation, CrossoverOperator<DoubleSolution> crossover, FunctionType functionType, String dataDirectory, double neighborhoodSelectionProbability, int maximumNumberOfReplacedSolutions, int neighborSize) {
         super(problem, populationSize, resultPopulationSize, maxEvaluations, mutation, crossover, functionType, dataDirectory, neighborhoodSelectionProbability, maximumNumberOfReplacedSolutions, neighborSize);
     }
+    
+    public void updateAll(List<DoubleSolution> pop){
+        int subProblemId=0;
+        NeighborType neighborType = chooseNeighborType();
+        for(DoubleSolution s : pop){
+            idealPoint.update(s.getObjectives());
+            updateNeighborhood(s, subProblemId++, neighborType);
+        }
+    }
 
     @Override
     public List<DoubleSolution> executeMethod() {

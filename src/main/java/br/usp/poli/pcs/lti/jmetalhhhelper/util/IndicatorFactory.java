@@ -113,7 +113,7 @@ public class IndicatorFactory {
       int populationSize) throws FileNotFoundException, IOException {
     
     Front pf;
-    if(problem instanceof RealWorldProblem){
+    if(problem instanceof RealWorldProblem || problem.getName().startsWith("RE") || problem.getName().startsWith("CRE")){
         //generate a TEMPORARY FRONT. IT CANNOT BE USED in the application
         pf=new ArrayFront(populationSize, problem.getNumberOfObjectives());
         for (int j = 0; j < populationSize; j++) {
