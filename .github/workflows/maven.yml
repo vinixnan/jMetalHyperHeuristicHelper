@@ -25,7 +25,7 @@ jobs:
         restore-keys: ${{ runner.os }}-m2      
 
     - name: Build and test with Maven
-      run: mvn clean install --file pom.xml -s settings.xml -DGIT_HUB_KEY=$GIT_HUB_KEY
+      run: mvn clean install --file pom.xml -s settings.xml -DGIT_HUB_KEY=${{ secrets.GIT_HUB_KEY }}
     
     - name: Deploy with Maven
-      run: mvn deploy --file pom.xml -s settings.xml -DGIT_HUB_KEY=$GIT_HUB_KEY -DskipTests
+      run: mvn deploy --file pom.xml -s settings.xml -DGIT_HUB_KEY=${{ secrets.GIT_HUB_KEY }} -DskipTests
