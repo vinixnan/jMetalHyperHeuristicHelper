@@ -4,15 +4,23 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>br.usp.poli.pcs.lti</groupId>
-    <artifactId>jMetalHyperHeuristicHelper</artifactId>
+    <artifactId>jmetalhyperheuristichelper</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.target>
+            1.8</maven.compiler.target>
     </properties>
     <name>jMetalHyperHeuristicHelper</name>
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub OWNER Apache Maven Packages</name>
+            <url>https://maven.pkg.github.com/vinixnan/jMetalHyperHeuristicHelper</url>
+        </repository>
+    </distributionManagement>
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
@@ -87,10 +95,12 @@
                 <version>1.5.0</version>
                 <configuration>
                     <targetClasses>
-                        <param>br.usp.poli.pcs.lti.jmetalbridge*</param>
+                        <param>
+                            br.usp.poli.pcs.lti.jmetalbridge*</param>
                     </targetClasses>
                     <targetTests>
-                        <param>br.usp.poli.pcs.lti.jmetalbridge*</param>
+                        <param>
+                            br.usp.poli.pcs.lti.jmetalbridge*</param>
                     </targetTests>
                 </configuration>
             </plugin>
@@ -134,7 +144,8 @@
                             <goal>copy-dependencies</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${project.build.directory}/lib</outputDirectory>
+                            <outputDirectory>
+                                ${project.build.directory}/lib</outputDirectory>
                         </configuration>
                     </execution>
                 </executions>
@@ -150,7 +161,8 @@
                         </goals>
                         <configuration>
                             <descriptorRefs>
-                                <descriptorRef>jar-with-dependencies</descriptorRef>
+                                <descriptorRef>
+                                    jar-with-dependencies</descriptorRef>
                             </descriptorRefs>
                         </configuration>
                     </execution>
@@ -172,7 +184,8 @@
                 <configuration>
                     <!--<configLocation>google_checks.xml</configLocation>-->
                     <!--<configLocation>sun_checks.xml</configLocation>-->
-                    <configLocation>google_checks.xml</configLocation>
+                    <configLocation>
+                        google_checks.xml</configLocation>
                     <failOnViolation>false</failOnViolation>
                 </configuration>
                 <reportSets>
