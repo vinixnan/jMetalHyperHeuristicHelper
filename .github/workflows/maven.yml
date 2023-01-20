@@ -27,5 +27,5 @@ jobs:
     - name: Build and test with Maven
       run: mvn clean install --file pom.xml -s settings.xml -DGIT_HUB_KEY=$GIT_HUB_KEY
     
-    - name: Package with Maven
-      run: mvn -B package --file pom.xml -s settings.xml -DGIT_HUB_KEY=$GIT_HUB_KEY -DskipTests
+    - name: Deploy with Maven
+      run: mvn deploy --file pom.xml -s settings.xml -DGIT_HUB_KEY=$GIT_HUB_KEY -DskipTests
