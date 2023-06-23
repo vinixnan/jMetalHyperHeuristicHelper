@@ -64,7 +64,7 @@ public class GDE3<S extends Solution<?>> extends Gde3<DoubleSolution> {
                     mutationOp.execute(s);
                 }
                 //New code-----------
-                TaggedSolution s2 = new DoubleTaggedSolution((DefaultDoubleSolution) s);
+                TaggedSolution s2=entag(s);
                 problem.evaluate((DoubleSolution) s2);//EVALUATION NOW IS HERE
                 if (crossoverOp instanceof DifferentialEvolution) {
                     parents.add((S) matingPopulation.get(i));

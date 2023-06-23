@@ -1,6 +1,9 @@
 package br.usp.poli.pcs.lti.jmetalhhhelper.flexiblealgs;
 
+import br.usp.poli.pcs.lti.jmetalhhhelper.core.DoubleTaggedSolution;
 import br.usp.poli.pcs.lti.jmetalhhhelper.core.OpManager;
+import br.usp.poli.pcs.lti.jmetalhhhelper.core.PermutationTaggedSolution;
+import br.usp.poli.pcs.lti.jmetalhhhelper.core.TaggedSolution;
 import br.usp.poli.pcs.lti.jmetalhhhelper.core.interfaces.ArchivedLLHInterface;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +13,10 @@ import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
 import org.uma.jmetal.problem.Problem;
+import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.solution.impl.DefaultDoubleSolution;
+import org.uma.jmetal.solution.impl.DefaultIntegerPermutationSolution;
 
 /**
  * This class extends the algorithm from jMetal and implements operations
@@ -282,5 +288,19 @@ public class Ibea<S extends Solution<?>> extends IBEA<S> implements
     @Override
     public OpManager getOpLLHManager() {
         return selector;
+    }
+    
+    @Override
+    public TaggedSolution entag(Solution s) {
+        TaggedSolution s2;
+        if(s instanceof TaggedSolution){
+            return (TaggedSolution) s;
+        }
+        if (problem instanceof AbstractDoubleProblem) {
+            s2 = new DoubleTaggedSolution((DefaultDoubleSolution) s);
+        } else {
+            s2 = new PermutationTaggedSolution((DefaultIntegerPermutationSolution) s);
+        }
+        return s2;
     }
 }

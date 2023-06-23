@@ -1,6 +1,7 @@
 package br.usp.poli.pcs.lti.jmetalhhhelper.core.interfaces;
 
 import br.usp.poli.pcs.lti.jmetalhhhelper.core.OpManager;
+import br.usp.poli.pcs.lti.jmetalhhhelper.core.TaggedSolution;
 import java.util.List;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
@@ -146,4 +147,6 @@ public interface LLHInterface<S extends Solution<?>> {
     void generateNewPopulation();
     
     OpManager getOpLLHManager();
+    
+    TaggedSolution entag(Solution s); 
 }

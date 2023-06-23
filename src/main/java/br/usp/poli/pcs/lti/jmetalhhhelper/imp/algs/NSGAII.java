@@ -96,12 +96,7 @@ public class NSGAII<S extends Solution<?>> extends Nsgaii<S> {
                 for (S s : offspring) {
                     mutationOperator.execute(s);
                     //New code-----------
-                    TaggedSolution s2;
-                    if (problem instanceof AbstractDoubleProblem) {
-                        s2 = new DoubleTaggedSolution((DefaultDoubleSolution) s);
-                    } else {
-                        s2 = new PermutationTaggedSolution((DefaultIntegerPermutationSolution) s);
-                    }
+                    TaggedSolution s2=entag(s);
                     problem.evaluate((S) s2);//EVALUATION NOW IS HERE
                     selector.assignTag(parents, s2, this);
                     offspringPopulation.add((S) s2);

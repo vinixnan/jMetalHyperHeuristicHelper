@@ -1,6 +1,9 @@
 package br.usp.poli.pcs.lti.jmetalhhhelper.flexiblealgs;
 
+import br.usp.poli.pcs.lti.jmetalhhhelper.core.DoubleTaggedSolution;
 import br.usp.poli.pcs.lti.jmetalhhhelper.core.OpManager;
+import br.usp.poli.pcs.lti.jmetalhhhelper.core.PermutationTaggedSolution;
+import br.usp.poli.pcs.lti.jmetalhhhelper.core.TaggedSolution;
 import java.util.List;
 import org.uma.jmetal.algorithm.multiobjective.gde3.GDE3;
 import org.uma.jmetal.operator.CrossoverOperator;
@@ -13,6 +16,9 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import br.usp.poli.pcs.lti.jmetalhhhelper.core.interfaces.LLHInterface;
+import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
+import org.uma.jmetal.solution.impl.DefaultDoubleSolution;
+import org.uma.jmetal.solution.impl.DefaultIntegerPermutationSolution;
 
 /**
  *
@@ -199,5 +205,19 @@ public class Gde3<S extends Solution<?>> extends GDE3 implements LLHInterface<S>
     @Override
     public OpManager getOpLLHManager() {
         return selector;
+    }
+    
+    @Override
+    public TaggedSolution entag(Solution s) {
+        TaggedSolution s2;
+        if(s instanceof TaggedSolution){
+            return (TaggedSolution) s;
+        }
+        if (problem instanceof AbstractDoubleProblem) {
+            s2 = new DoubleTaggedSolution((DefaultDoubleSolution) s);
+        } else {
+            s2 = new PermutationTaggedSolution((DefaultIntegerPermutationSolution) s);
+        }
+        return s2;
     }
 }
