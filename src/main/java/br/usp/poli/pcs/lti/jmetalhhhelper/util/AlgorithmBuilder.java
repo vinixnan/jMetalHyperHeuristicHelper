@@ -39,9 +39,16 @@ import org.uma.jmetal.util.pseudorandom.RandomGenerator;
 import br.usp.poli.pcs.lti.jmetalhhhelper.core.interfaces.LLHInterface;
 import br.usp.poli.pcs.lti.jmetalhhhelper.imp.algs.GDE3;
 import br.usp.poli.pcs.lti.jmetalhhhelper.imp.algs.IBEA;
+import br.usp.poli.pcs.lti.jmetalhhhelper.imp.algs.MOEADD;
+import br.usp.poli.pcs.lti.jmetalhhhelper.imp.algs.MOMBI2;
 import br.usp.poli.pcs.lti.jmetalhhhelper.imp.algs.NSGAII;
+import br.usp.poli.pcs.lti.jmetalhhhelper.imp.algs.NSGAIII;
 import br.usp.poli.pcs.lti.jmetalhhhelper.imp.algs.SPEA2;
+import br.usp.poli.pcs.lti.jmetalhhhelper.imp.algs.SPEA2SDE;
 import br.usp.poli.pcs.lti.jmetalhhhelper.imp.algs.mIBEA;
+import org.uma.jmetal.algorithm.multiobjective.nsgaiii.NSGAIIIBuilder;
+import org.uma.jmetal.operator.impl.selection.RandomSelection;
+import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
 
 /**
  * This class builds algorithms.
@@ -316,6 +323,56 @@ public class AlgorithmBuilder<S extends Solution<?>> {
         return algorithm;
     }
 
+    public LLHInterface createMoeadD(ParametersforAlgorithm configAlg, ParametersforHeuristics configHeuristic) throws JMException {
+        CrossoverOperator crossover = this.generateCross(configHeuristic);
+        MutationOperator mutation = this.generateMuta(configHeuristic, configAlg.getMaxIteractions());
+        LLHInterface algorithm = new MOEADD(problem, configAlg.getPopulationSize(), configAlg.getPopulationSize(), configAlg.getMaxEvaluations(), crossover, mutation, configAlg.getMoeadFunction(), configAlg.getWeightsPath(), configAlg.getNeighborhoodSelectionProbability(), configAlg.getMaximumNumberOfReplacedSolutions(), configAlg.getNeighborSize());
+        return algorithm;
+    }
+
+    public LLHInterface createMombiII(ParametersforAlgorithm configAlg, ParametersforHeuristics configHeuristic) throws JMException {
+        SelectionOperator selection = new BinaryTournamentSelection<>(new RankingAndCrowdingDistanceComparator<>());
+        CrossoverOperator crossover = this.generateCross(configHeuristic);
+        MutationOperator mutation = this.generateMuta(configHeuristic, configAlg.getMaxIteractions());
+        LLHInterface algorithm = new MOMBI2(problem, configAlg.getMaxIteractions(), crossover, mutation, selection, new SequentialSolutionListEvaluator(), configAlg.getWeightsPath());
+        return algorithm;
+    }
+
+    public LLHInterface createNsgaIII(ParametersforAlgorithm configAlg, ParametersforHeuristics configHeuristic) throws JMException {
+        SelectionOperator selection = new RandomSelection();
+        CrossoverOperator crossover = this.generateCross(configHeuristic);
+        MutationOperator mutation = this.generateMuta(configHeuristic, configAlg.getMaxIteractions());
+        NSGAIIIBuilder builder = new NSGAIIIBuilder(problem);
+        builder.setMutationOperator(mutation);
+        builder.setSelectionOperator(selection);
+        builder.setCrossoverOperator(crossover);
+        builder.setMaxIterations(configAlg.getMaxIteractions());
+        builder.setPopulationSize(configAlg.getPopulationSize());
+        builder.setSolutionListEvaluator(new SequentialSolutionListEvaluator());
+        LLHInterface algorithm = new NSGAIII(builder);
+        return algorithm;
+    }
+
+    /**
+     * Create spea 2 standard meta-heuristic.
+     *
+     * @param configAlg the config alg
+     * @param configHeuristic the config heuristic
+     * @return the standard meta-heuristic
+     * @throws JMException the jm exception
+     */
+    public LLHInterface createSpea2SDE(ParametersforAlgorithm configAlg,
+            ParametersforHeuristics configHeuristic) throws JMException {
+        SelectionOperator selection = this.generateSelection();
+        CrossoverOperator crossover = this.generateCross(configHeuristic);
+        MutationOperator mutation = this.generateMuta(configHeuristic, configAlg.getMaxIteractions());
+        int k = 1;
+        LLHInterface algorithm = new SPEA2SDE(problem, configAlg.getMaxIteractions(),
+                configAlg.getPopulationSize(), crossover,
+                mutation, selection, new SequentialSolutionListEvaluator());
+        return algorithm;
+    }
+
     /**
      * Create standard metaheuristic.
      *
@@ -338,6 +395,14 @@ public class AlgorithmBuilder<S extends Solution<?>> {
                 return createSpea2(configAlg, configHeuristic);
             case "Gde3":
                 return createGde3(configAlg, configHeuristic);
+            case "MoeaDD":
+                return createMoeadD(configAlg, configHeuristic);
+            case "MoeadDd":
+                return createMoeadD(configAlg, configHeuristic);
+            case "Mombi2":
+                return createMombiII(configAlg, configHeuristic);
+            case "Nsgaiii":
+                return createNsgaIII(configAlg, configHeuristic);
             default:
                 System.err.println("Algorithm not found");
                 return null;
