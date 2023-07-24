@@ -1,6 +1,5 @@
 package br.usp.poli.pcs.lti.jmetalhhhelper.imp.algs;
 
-import br.usp.poli.pcs.lti.jmetalhhhelper.core.DoubleTaggedSolution;
 import br.usp.poli.pcs.lti.jmetalhhhelper.core.LowLevelHeuristic;
 import br.usp.poli.pcs.lti.jmetalhhhelper.core.TaggedSolution;
 import br.usp.poli.pcs.lti.jmetalhhhelper.flexiblealgs.NsgaIII;
@@ -12,7 +11,6 @@ import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.solution.impl.DefaultDoubleSolution;
 
 /**
  *
@@ -47,7 +45,7 @@ public class NSGAIII<S extends Solution<?>> extends NsgaIII<S> {
                     mutationOp.execute(s);
                 }
                 //New code-----------
-                TaggedSolution s2 = new DoubleTaggedSolution((DefaultDoubleSolution) s);
+                TaggedSolution s2 = entag(s);
                 problem.evaluate((S) s2);//EVALUATION NOW IS HERE
                 if (crossoverOp instanceof DifferentialEvolution) {
                     parents.add(population.get(i));

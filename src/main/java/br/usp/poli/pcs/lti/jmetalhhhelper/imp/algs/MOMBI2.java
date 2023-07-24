@@ -1,6 +1,5 @@
 package br.usp.poli.pcs.lti.jmetalhhhelper.imp.algs;
 
-import br.usp.poli.pcs.lti.jmetalhhhelper.core.DoubleTaggedSolution;
 import br.usp.poli.pcs.lti.jmetalhhhelper.core.LowLevelHeuristic;
 import br.usp.poli.pcs.lti.jmetalhhhelper.core.TaggedSolution;
 import br.usp.poli.pcs.lti.jmetalhhhelper.flexiblealgs.Mombi2;
@@ -13,7 +12,6 @@ import org.uma.jmetal.operator.SelectionOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.solution.impl.DefaultDoubleSolution;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 
 /**
@@ -49,7 +47,7 @@ public class MOMBI2<S extends Solution<?>> extends Mombi2<S> {
                     mutationOp.execute(s);
                 }
                 //New code-----------
-                TaggedSolution s2 = new DoubleTaggedSolution((DefaultDoubleSolution) s);
+                TaggedSolution s2 = entag(s);
                 problem.evaluate((S) s2);//EVALUATION NOW IS HERE
                 if (crossoverOp instanceof DifferentialEvolution) {
                     parents.add(population.get(i));

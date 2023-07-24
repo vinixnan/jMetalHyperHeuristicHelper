@@ -50,4 +50,5 @@ public interface TaggedSolution {
   void setNewSolution(boolean isnew);
   boolean isNewSolution();
   String strVariables();
+  double[] getObjectives();
 }

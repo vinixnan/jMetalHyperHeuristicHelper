@@ -5,17 +5,16 @@ import br.usp.poli.pcs.lti.jmetalhhhelper.core.OpManager;
 import br.usp.poli.pcs.lti.jmetalhhhelper.core.PermutationTaggedSolution;
 import br.usp.poli.pcs.lti.jmetalhhhelper.core.TaggedSolution;
 import br.usp.poli.pcs.lti.jmetalhhhelper.core.interfaces.LLHInterface;
+import br.usp.poli.pcs.lti.jmetalhhhelper.imp.algs.jmetaloriginal.MOEADD;
 import java.util.ArrayList;
 import java.util.List;
 import org.uma.jmetal.algorithm.multiobjective.moead.MOEAD;
-import org.uma.jmetal.algorithm.multiobjective.moead.MOEADD;
 import org.uma.jmetal.algorithm.multiobjective.moead.util.MOEADUtils;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.impl.crossover.DifferentialEvolutionCrossover;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
-import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.impl.DefaultDoubleSolution;
 import org.uma.jmetal.solution.impl.DefaultIntegerPermutationSolution;
@@ -27,7 +26,7 @@ import org.uma.jmetal.util.point.impl.NadirPoint;
  *
  * @author vinicius
  */
-public class Moeadd<S extends DoubleSolution> extends MOEADD<S> implements LLHInterface<S> {
+public class Moeadd<S extends Solution<?>> extends MOEADD<S> implements LLHInterface<S> {
 
     protected OpManager selector = new OpManager();
 
@@ -153,7 +152,7 @@ public class Moeadd<S extends DoubleSolution> extends MOEADD<S> implements LLHIn
             List<S> front = ranking.getSubfront(curRank);
             for (S s : front) {
                 int position = this.population.indexOf(s);
-                if(position < rankIdx[curRank].length){
+                if (position < rankIdx[curRank].length) {
                     rankIdx[curRank][position] = 1;
                 }
             }
@@ -210,9 +209,9 @@ public class Moeadd<S extends DoubleSolution> extends MOEADD<S> implements LLHIn
         }
         return population;
     }
-    
-    public void updateAll(List<S> pop){
-        for(S s : pop){
+
+    public void updateAll(List<S> pop) {
+        for (S s : pop) {
             idealPoint.update(s.getObjectives());
             nadirPoint.update(s.getObjectives());
             updateArchive(s);
@@ -272,8 +271,6 @@ public class Moeadd<S extends DoubleSolution> extends MOEADD<S> implements LLHIn
         }
         return fitness;
     }
-    
-    
 
     @Override
     public void updateArchive(S indiv) {
@@ -468,11 +465,11 @@ public class Moeadd<S extends DoubleSolution> extends MOEADD<S> implements LLHIn
     public void generateNewPopulation() {
         this.executeMethod();
     }
-    
+
     @Override
     public TaggedSolution entag(Solution s) {
         TaggedSolution s2;
-        if(s instanceof TaggedSolution){
+        if (s instanceof TaggedSolution) {
             return (TaggedSolution) s;
         }
         if (problem instanceof AbstractDoubleProblem) {
