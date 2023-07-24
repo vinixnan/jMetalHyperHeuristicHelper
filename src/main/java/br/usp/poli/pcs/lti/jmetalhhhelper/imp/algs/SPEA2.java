@@ -94,12 +94,7 @@ public class SPEA2<S extends Solution<?>> extends Spea2<S> {
                 mutationOperator.execute(offspring.get(0));
 
                 //New code-----------
-                TaggedSolution s2;
-                if (problem instanceof AbstractDoubleProblem) {
-                    s2 = new DoubleTaggedSolution((DefaultDoubleSolution) offspring.get(0));
-                } else {
-                    s2 = new PermutationTaggedSolution((DefaultIntegerPermutationSolution) offspring.get(0));
-                }
+                TaggedSolution s2=entag(offspring.get(0));
                 problem.evaluate((S) s2);//EVALUATION NOW IS HERE
                 selector.assignTag(parents, s2, this);
                 offSpringPopulation.add((S) s2);

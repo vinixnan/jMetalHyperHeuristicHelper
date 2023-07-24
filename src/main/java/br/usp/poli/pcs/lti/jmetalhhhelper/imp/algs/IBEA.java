@@ -110,12 +110,7 @@ public class IBEA<S extends Solution<?>> extends Ibea<S> {
                 //problem.evaluateConstraints(offSpring[0]);
 
                 //New code-----------
-                TaggedSolution s2;
-                if (problem instanceof AbstractDoubleProblem) {
-                    s2 = new DoubleTaggedSolution((DefaultDoubleSolution) offspring.get(0));
-                } else {
-                    s2 = new PermutationTaggedSolution((DefaultIntegerPermutationSolution) offspring.get(0));
-                }
+                TaggedSolution s2=entag(offspring.get(0));
                 selector.assignTag(parents, s2, this);
                 offSpringSolutionSet.add((S) s2);
                 //-----------------------------------

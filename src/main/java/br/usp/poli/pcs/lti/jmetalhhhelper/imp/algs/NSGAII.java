@@ -55,7 +55,7 @@ public class NSGAII<S extends Solution<?>> extends Nsgaii<S> {
                 }
 
                 //New code-----------
-                TaggedSolution s2 = new DoubleTaggedSolution((DefaultDoubleSolution) s);
+                TaggedSolution s2=entag(s);
                 problem.evaluate((S) s2);//EVALUATION NOW IS HERE
                 if (crossoverOp instanceof DifferentialEvolution) {
                     parents.add(matingPopulation.get(i));
