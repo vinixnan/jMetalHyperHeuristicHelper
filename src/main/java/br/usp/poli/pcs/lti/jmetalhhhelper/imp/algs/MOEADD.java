@@ -52,11 +52,11 @@ public class MOEADD<S extends Solution<?>> extends Moeadd<S> {
                     parents.add((S) population.get(cid));
                     ((DifferentialEvolution) crossoverOp).setCurrentSolution((DoubleSolution) population.get(cid));
                 }
-                List<DoubleSolution> child = (List<DoubleSolution>) crossoverOp.execute(parents);
-                List<DoubleSolution> offspring = new ArrayList<>();
+                List<S> child = (List<S>) crossoverOp.execute(parents);
+                List<S> offspring = new ArrayList<>();
                 offspring.add(child.get(0));//because of NR 
 
-                for (DoubleSolution s : offspring) {
+                for (S s : offspring) {
                     if (mutationOp != null) {
                         mutationOp.execute(s);
                     }
