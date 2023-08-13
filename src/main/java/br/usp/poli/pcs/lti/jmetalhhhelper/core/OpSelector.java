@@ -84,9 +84,9 @@ public abstract class OpSelector<S extends Solution<?>> implements Serializable 
       LowLevelHeuristic appliedAlgorithm) {
     for (S parent : parents) {
       //deve garantir que todos pais sejam testados
-      if (parent instanceof DoubleTaggedSolution && this
-          .equals((DoubleTaggedSolution) parent, targetsolution)) {
-        return ((DoubleTaggedSolution) parent).getAction();
+      if (parent instanceof TaggedSolution && this
+          .equals((TaggedSolution) parent, targetsolution)) {
+        return ((TaggedSolution) parent).getAction();
       }
     }
     return appliedAlgorithm;
